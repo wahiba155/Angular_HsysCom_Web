@@ -1,18 +1,9 @@
 .footer {
   background: linear-gradient(to right, #2e5c84, #1E3953);
-  color: #f0f0f0;
-  padding: 18px 8px;
-  font-family: 'Segoe UI', sans-serif;
-  width: 100%;
-    position: sticky;
-
-}
-
-.footer-bottom {
-  text-align: center;
- 
-  font-size: 0.9rem;
   color: #ded9d9;
-    z-index: 0;
-    
+  padding: 18px 8px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  /* Pas de position fixed */
 }

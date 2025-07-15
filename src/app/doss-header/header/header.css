@@ -76,6 +76,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+    position: relative;
+
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
@@ -204,15 +206,7 @@
   }
 
 
-
 }
-
-
-
-
-
-
-
 
 .menu-toggle {
   display: none;
@@ -232,17 +226,7 @@
 
 }
 
-.badge {
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  background: #1E3953;
-  color: white;
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 50%;
-  font-weight: bold;
-}
+
 
 .sidebar-panier {
   position: fixed;
@@ -443,7 +427,6 @@
 }
 
 
-
 .close-btn {
   background: transparent;
   border: none;
@@ -504,6 +487,38 @@
     display: none;
   }
 
+}
+
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: #1E3953;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.btn-panier {
+  display: block;
+  text-align: center;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #005ea6, #2e5c84);
+  color: white;
+}
+
+.btn-panier:hover {
+  background: linear-gradient(135deg, #1E3953, #2e5c84);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(30, 57, 83, 0.3);
 }
 
 

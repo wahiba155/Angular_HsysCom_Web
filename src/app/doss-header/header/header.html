@@ -28,11 +28,12 @@
       <a class="login-link" routerLink="/login">Se connecter</a>
     </div>
 
-    <fa-icon [icon]="faHeart" class="icon"></fa-icon>
-    <fa-icon [icon]="faCartShopping" class="icon" (click)="toggleSidebar()"
-      style="position: relative;"> 
-      <span class="badge" *ngIf="nombreArticles > 0">{{ nombreArticles }}</span>
-    </fa-icon>
+    <fa-icon [icon]="faHeart" class="icon"><span class="badge" *ngIf="nombreFavoris > 0">{{ nombreFavoris }}</span></fa-icon>
+    <fa-icon [icon]="faCartShopping" class="icon" (click)="toggleSidebar()" style="position: relative;"> 
+  <span class="badge">{{ nombreArticles || 0 }}</span>
+</fa-icon>
+
+
   </div>
 </header>
 
@@ -72,7 +73,7 @@
   </div>
 
   <div class="actions-panier">
-    <button (click)="voirPanier()">Voir panier</button>
+<a routerLink="/panierpage" class="btn-panier">Voir panier</a>
     <button (click)="panierService.viderPanier()">Vider le panier</button>
   </div>
 </div>

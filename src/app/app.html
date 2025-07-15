@@ -1,28 +1,27 @@
-<app-header></app-header>
+<div class="page-container">
 
-<main class="main">
-  <div class="content">
-    <!-- Suppression de la partie left-side -->
+  <app-header></app-header>
 
-    <div class="divider" role="separator" aria-label="Divider"></div>
-
-    <div class="right-side">
-      <!-- Suppression de la pill-group avec les liens -->
-      
-      <div class="social-links">
-        <!-- Les liens sociaux -->
-        <a href="https://github.com/angular/angular" aria-label="Github" target="_blank" rel="noopener">
-          <!-- SVG Github ici -->
-        </a>
-        <a href="https://twitter.com/angular" aria-label="Twitter" target="_blank" rel="noopener">
-          <!-- SVG Twitter ici -->
-        </a>
-        <a href="https://www.youtube.com/channel/UCbn1OgGei-DV7aSRo_HaAiw" aria-label="Youtube" target="_blank" rel="noopener">
-          <!-- SVG Youtube ici -->
-        </a>
+  <main class="main content">
+    <div class="content-inner">
+      <!-- Contenu fixe à gauche / droite -->
+      <div class="content">
+        <!-- Suppression de la partie left-side -->
+        <div class="divider" role="separator" aria-label="Divider"></div>
+        <div class="right-side">
+          <div class="social-links">
+            <a href="https://github.com/angular/angular" aria-label="Github" target="_blank" rel="noopener"></a>
+            <a href="https://twitter.com/angular" aria-label="Twitter" target="_blank" rel="noopener"></a>
+            <a href="https://www.youtube.com/channel/UCbn1OgGei-DV7aSRo_HaAiw" aria-label="Youtube" target="_blank" rel="noopener"></a>
+          </div>
+        </div>
       </div>
+
+      <!-- La partie dynamique selon la route -->
+      <router-outlet></router-outlet>
     </div>
-  </div>
-</main>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+  </main>
+
+  <app-footer></app-footer>
+
+</div>

@@ -17,5 +17,34 @@ body > * {
 .main-content {
   flex: 1;
 }
+  html, body {
+      height: 100%;
+      margin: 0;
+    }
+    /* Conteneur principal en flex vertical */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    /* Le contenu principal prend tout l'espace disponible */
+    main {
+      flex: 1;
+    }
+     html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex-grow: 1;
+      /* pour que le main prenne tout l'espace restant */
+    }
 
 

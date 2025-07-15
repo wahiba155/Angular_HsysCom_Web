@@ -1,7 +1,3 @@
-.main {
-  margin-bottom: 40px; /* espace entre contenu principal et footer */
-}
-
 /* Reset global */
 * {
   margin: 0;
@@ -9,7 +5,29 @@
   box-sizing: border-box;
 }
 
-body {
+html, body, .page-container {
+  height: 100%;
   margin: 0;
   padding: 0;
 }
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* hauteur minimale écran */
+}
+
+
+/* espace entre contenu fixe et footer */
+.main {
+  margin-bottom: 40px; /* peut être réduit si tu veux */
+}
+/* Empêcher le scroll horizontal global */
+html, body {
+  overflow-x: hidden;
+}
+* {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+

@@ -1,0 +1,42 @@
+<table class="panier-table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Produit</th>
+      <th>Prix</th>
+      <th>Quantité</th>
+      <th>Sous-total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let produit of panierService.getProduits()">
+      <td>
+        <button class="delete-btn" (click)="supprimerProduit(produit)">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
+      </td>
+      <td class="produit-cell">
+        <img [src]="produit.image" class="produit-img" />
+        <span class="produit-nom">{{ produit.nom }}</span>
+      </td>
+      <td>{{ produit.prix }} DH</td>
+      <td>
+        <div class="prix-controls">
+          <button (click)="decrementQuantite(produit)">-</button>
+          <span>{{ produit.quantite }}</span>
+          <button (click)="incrementQuantite(produit)">+</button>
+        </div>
+      </td>
+      <td><strong>{{ produit.prix * produit.quantite }} DH</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="actions-panier">
+  <button >Commander</button>
+  <button (click)="viderPanier()">Vider le panier</button>
+</div>
+<div class="total-panier">
+  <p><strong>Total général:</strong> {{ panierService.getTotal() }} MAD</p>
+</div>
+

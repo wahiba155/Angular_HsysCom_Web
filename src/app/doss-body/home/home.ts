@@ -16,6 +16,7 @@ library.add(faCartShopping);
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
+
 export class Home implements OnInit {
   @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
   faCartShopping = faCartShopping;
@@ -292,6 +293,8 @@ categoriesDisponibles = [
       image: 'assets/images/switch.png'
     }
   ];
+  nombreArticles: number = 0;
+nombreFavoris: number = 0;
 
    incrementQuantite(produit: any) {
   produit.quantite = (produit.quantite || 1) + 1;
@@ -322,32 +325,35 @@ voirDetails(produit: any): void {
   console.log('Voir détails du produit:', produit);
 
 }
+calculerNombreArticles(): void {
+  const produits = this.panierService.getProduits();
+  this.nombreArticles = produits.reduce((total, produit) => {
+    return total + (produit.quantite || 1);
+  }, 0);
+}
 
-// Méthode pour ajouter/retirer des favoris
+
+
+// Modifier toggleFavoris pour recalculer le nombre de favoris à chaque toggle
 toggleFavoris(produit: any): void {
   if (produit.favoris === undefined) {
     produit.favoris = false;
   }
-  
   produit.favoris = !produit.favoris;
-  
-  console.log('Favoris togglé pour:', produit.nom, 'État:', produit.favoris);
-  
-  
+
 }
 
+// Modifier ajouterAuPanier pour recalculer le nombre d'articles
 ajouterAuPanier(produit: any): void {
   if (!produit.quantite || produit.quantite < 1) {
-  produit.quantite = 1;
-}
-    this.panierService.ajouterProduit(produit);
-
-  
-  console.log('Produit ajouté au panier:', produit.nom, 'Quantité:', produit.quantite);
-  
-  
+    produit.quantite = 1;
+  }
+  this.panierService.ajouterProduit(produit);
+  this.calculerNombreArticles(); // mise à jour du compteur panier
   alert(`${produit.nom} ajouté au panier !`);
 }
+
+
 
  
   produitsFiltres: any[] = [];
@@ -357,11 +363,10 @@ ajouterAuPanier(produit: any): void {
   }
 
 
-
-  
-
   ngOnInit(): void {
     this.initializeAnimations();
+     this.calculerNombreArticles();
+  this.initializeAnimations();
   }
 
   private initializeAnimations(): void {

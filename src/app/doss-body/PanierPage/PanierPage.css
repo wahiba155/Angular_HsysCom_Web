@@ -1,0 +1,126 @@
+.panier-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(30, 57, 83, 0.1);
+  margin-top: 30px;
+}
+
+.panier-table thead {
+  background: linear-gradient(135deg, #2e5c84, #1E3953);
+  color: white;
+}
+
+.panier-table th, .panier-table td {
+  padding: 15px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 15px;
+}
+
+.produit-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.produit-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+margin-left: 30%;
+}
+
+.produit-nom {
+  font-weight: 500;
+  color: #1E3953;
+  text-align: left;
+  white-space: normal;        /* ✅ Permet les retours à la ligne */
+  word-break: break-word;     /* ✅ Coupe si trop long pour le bloc */
+  overflow-wrap: break-word;
+}
+
+.prix-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.prix-controls button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #dce0e1;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.prix-controls button:hover {
+  background: #95c2ec;
+  transform: scale(1.05);
+}
+
+.prix-controls span {
+  font-weight: bold;
+  color: #1E3953;
+}
+
+.actions-panier {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.actions-panier button {
+  padding: 12px 24px;
+  font-weight: 600;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 2px solid #1E3953;
+  background: white;
+  color: #1E3953;
+  margin-bottom: 15px;
+}
+
+.actions-panier button:hover {
+  background: #1E3953;
+  color: white;
+  box-shadow: 0 4px 12px rgba(30, 57, 83, 0.2);
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #1E3953;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.2);
+  color: red;
+}
+
+.total-panier {
+  background-color: #f4f4f4;
+  padding: 12px 20px;
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  font-size: 1.1rem;
+  text-align: right;
+  font-family: 'Segoe UI', sans-serif;
+  color: #1E3953;
+}
+
