@@ -1,0 +1,15 @@
+.main {
+  margin-bottom: 40px; /* espace entre contenu principal et footer */
+}
+
+/* Reset global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

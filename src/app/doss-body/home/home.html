@@ -1,0 +1,63 @@
+<div class="category-strip">
+  <div
+    class="category-card"
+    *ngFor="let cat of categoriesDisponibles"
+    (mouseenter)="hoveredCategorie = cat.nom"
+    (mouseleave)="hoveredCategorie = null"
+    (click)="filtrerProduits(cat.nom)"
+  >
+<img [src]="cat.image" [alt]="cat.nom" style="background: white;" />
+    <span>{{ cat.nom }}</span>
+
+    
+  </div>
+</div>
+<div class="product-list" *ngIf="produitsFiltres.length > 0">
+  <ng-container *ngFor="let produit of produitsFiltres">
+    <div class="product-card informatique">
+
+      <div class="top-right-icon">
+        <fa-icon [icon]="faHeart" class="icon-action" (click)="toggleFavoris(produit)"></fa-icon>
+      </div>
+
+<img [src]="produit.selectedImage || produit.image" [alt]="produit.nom" class="product-img" />
+
+      <div class="product-info">
+        <h3>{{ produit.nom }}</h3>
+        <p>{{ produit.description }}</p>
+      </div>
+
+      <div class="palette-price-row">
+        <div class="color-palette" *ngIf="produit.couleurImages?.length; else emptyColorPalette">
+          <div
+  class="color-dot"
+  *ngFor="let item of produit.couleurImages"
+  [ngStyle]="{ 'background-color': item.color }"
+  [class.selected]="produit.selectedColor === item.color"
+  (click)="selectColorImage(produit, item.image, item.color)"
+></div>
+
+        </div>
+
+        <div class="price">{{ produit.prix }} MAD</div>
+      </div>
+
+      <ng-template #emptyColorPalette>
+        <div class="color-palette placeholder"></div>
+      </ng-template>
+
+      <div class="product-actions">
+        <div class="right-icon">
+          <fa-icon [icon]="faCartShopping" class="icon-action" (click)="ajouterAuPanier(produit)"></fa-icon>
+        </div>
+
+        <div class="quantity-selector">
+          <button (click)="decrementQuantite(produit)" class="qty-btn">−</button>
+          <span class="qty-value">{{ produit.quantite || 1 }}</span>
+          <button (click)="incrementQuantite(produit)" class="qty-btn">+</button>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+</div>

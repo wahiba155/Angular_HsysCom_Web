@@ -1,0 +1,78 @@
+<div class="top-strip">
+  <div class="strip-left">📦 Livraison gratuite dès 100 MAD</div>
+  
+  <div class="strip-center">
+    Profitez de tous vos retraits colis offerts !
+  </div>
+  
+  <div class="strip-right">📞 05.37.39.21.64</div>
+</div>
+
+<header class="top-bar">
+  <div class="left-section">
+    <a href="/home" routerLinkActive="active">
+      <img src="assets/images/LOGO.png" alt="Logo" />
+    </a>
+
+    <div class="search-container">
+      <input type="text" placeholder="Que recherchez-vous ?" />
+      <button class="search-btn">
+        <fa-icon [icon]="faSearch"></fa-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="user-block">
+      <fa-icon [icon]="faUser" class="icon"></fa-icon>
+      <a class="login-link" routerLink="/login">Se connecter</a>
+    </div>
+
+    <fa-icon [icon]="faHeart" class="icon"></fa-icon>
+    <fa-icon [icon]="faCartShopping" class="icon" (click)="toggleSidebar()"
+      style="position: relative;"> 
+      <span class="badge" *ngIf="nombreArticles > 0">{{ nombreArticles }}</span>
+    </fa-icon>
+  </div>
+</header>
+
+
+<nav class="nav-bar" [ngClass]="{ open: navOpen }">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Catégories</a>
+  <a routerLink="/about" routerLinkActive="active">Service</a>
+</nav>
+
+<div class="sidebar-panier" [class.visible]="sidebarVisible">
+  <div class="sidebar-panier-header">
+    <h3>Votre panier</h3>
+    <button class="close-btn" (click)="closeSidebar()">
+      <fa-icon [icon]="faTimes"></fa-icon>
+    </button>
+  </div>
+
+  <div *ngFor="let produit of panierService.getProduits()" class="produit-panier">
+    <img [src]="produit.image" alt="{{ produit.nom }}" class="panier-img" />
+    
+    <div class="infos">
+      <p><strong>{{ produit.nom }}</strong></p>
+      <p>{{ produit.prix }} MAD</p>
+
+      <div class="prix-controls">
+        <button (click)="decrementQuantite(produit)">-</button>
+        <span>{{ produit.quantite }}</span>
+        <button  (click)="incrementQuantite(produit)">+</button>
+      </div>
+
+      <p>Total: {{ produit.prix * produit.quantite }} MAD</p>
+    </div>
+  </div>
+
+  <div class="total-panier">
+    <p><strong>Total général:</strong> {{ panierService.getTotal() }} MAD</p>
+  </div>
+
+  <div class="actions-panier">
+    <button (click)="voirPanier()">Voir panier</button>
+    <button (click)="panierService.viderPanier()">Vider le panier</button>
+  </div>
+</div>
