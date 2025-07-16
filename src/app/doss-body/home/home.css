@@ -297,5 +297,93 @@
   }
  
 }
+/* Ajoutez ces styles à votre fichier CSS existant */
+
+.product-card {
+  width: 230px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+  cursor: pointer; /* ✓ Ajout du cursor pointer */
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(30, 57, 83, 0.15); /* ✓ Amélioration de l'ombre au hover */
+  border-color: #1E3953; /* ✓ Couleur de bordure au hover */
+}
+
+/* Empêcher la propagation du clic sur les boutons d'action */
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  gap: 6px;
+  z-index: 10; /* ✓ Assurer que les boutons restent cliquables */
+}
+
+.icon-action {
+  font-size: 22px;
+  color: #1E3953;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  z-index: 11; /* ✓ Priorité sur le clic de la carte */
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  position: relative;
+  right: 60%;
+  z-index: 11; /* ✓ Priorité sur le clic de la carte */
+}
+
+.qty-btn {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  z-index: 12; /* ✓ Priorité maximale */
+}
+
+.color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: transform 0.2s;
+  z-index: 11; /* ✓ Priorité sur le clic de la carte */
+}
+
+/* Animation d'entrée pour les cartes */
+.product-card {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 

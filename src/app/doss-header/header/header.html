@@ -28,10 +28,16 @@
       <a class="login-link" routerLink="/login">Se connecter</a>
     </div>
 
-    <fa-icon [icon]="faHeart" class="icon"><span class="badge" *ngIf="nombreFavoris > 0">{{ nombreFavoris }}</span></fa-icon>
-    <fa-icon [icon]="faCartShopping" class="icon" (click)="toggleSidebar()" style="position: relative;"> 
-  <span class="badge">{{ nombreArticles || 0 }}</span>
-</fa-icon>
+    <div class="icon-panier-wrapper" >
+      <fa-icon [icon]="faHeart" class="icon">
+
+      </fa-icon><span class="badge">{{nombreFavoris}}</span>
+    </div>
+<div class="icon-panier-wrapper" (click)="toggleSidebar()">
+  <fa-icon [icon]="faCartShopping" class="icon"></fa-icon>
+  <span class="badge">{{ nombreArticles }}</span>
+</div>
+
 
 
   </div>
@@ -48,10 +54,16 @@
     <h3>Votre panier</h3>
     <button class="close-btn" (click)="closeSidebar()">
       <fa-icon [icon]="faTimes"></fa-icon>
+    
     </button>
   </div>
+  
+  
 
   <div *ngFor="let produit of panierService.getProduits()" class="produit-panier">
+    <button class="btn-delete-produit" (click)="supprimerProduit(produit)">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
     <img [src]="produit.image" alt="{{ produit.nom }}" class="panier-img" />
     
     <div class="infos">
@@ -60,7 +72,7 @@
 
       <div class="prix-controls">
         <button (click)="decrementQuantite(produit)">-</button>
-        <span>{{ produit.quantite }}</span>
+        <span>{{ produit.quantite || 1 }}</span>
         <button  (click)="incrementQuantite(produit)">+</button>
       </div>
 

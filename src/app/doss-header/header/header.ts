@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { PanierService } from '../../services/panier.service';
 import { Subscription } from 'rxjs';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { NavigationEnd } from '@angular/router';
 
-import { faSearch, faHeart, faCartShopping, faUser, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faHeart, faCartShopping, faUser, faTimes,faTrash} from '@fortawesome/free-solid-svg-icons';
 
-library.add(faSearch, faHeart, faCartShopping, faUser, faTimes);
+library.add(faSearch, faHeart, faCartShopping, faUser, faTimes,faTrash);
 
 @Component({
   selector: 'app-header',
@@ -22,13 +23,15 @@ export class Header implements OnInit, OnDestroy {
   // Initialisation des badges à 0
   nombreFavoris: number = 0;
   nombreArticles: number = 0;
-  
+  totalMontant: number = 0;
+
   // Icônes FontAwesome
   faSearch = faSearch;
   faHeart = faHeart;
   faCartShopping = faCartShopping;
   faUser = faUser;
   faTimes = faTimes;
+  faTrash = faTrash;
   
   // État de la sidebar et navigation
   sidebarVisible = false;
@@ -49,9 +52,18 @@ export class Header implements OnInit, OnDestroy {
     
      this.nombreArticles = 0;
 
-  // Ecoute du panier
-  this.panierSub = this.panierService.panier$.subscribe(panier => {
-    this.nombreArticles = panier?.length ?? 0;
+this.panierSub = this.panierService.panier$.subscribe(panier => {
+  this.nombreArticles = panier.reduce((total, produit) => total + (produit.quantite ?? 1), 0);
+    console.log('🧾 Articles dans le panier :', this.nombreArticles);
+
+});
+
+
+  // Fermer la sidebar si on navigue vers /panierpage
+  this.router.events.subscribe(event => {
+    if (event instanceof NavigationEnd && event.urlAfterRedirects === '/panierpage') {
+      this.closeSidebar();
+    }
   });
   }
 
@@ -151,4 +163,9 @@ this.router.navigate(['/panierpage']);
     this.nombreFavoris = 0;
     this.nombreArticles = 0;
   }
+
+   supprimerProduit(produit: any): void {
+    this.panierService.supprimerProduit(produit);
+  }
+
 }

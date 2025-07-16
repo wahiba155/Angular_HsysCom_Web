@@ -9,26 +9,35 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let produit of panierService.getProduits()">
-      <td>
-        <button class="delete-btn" (click)="supprimerProduit(produit)">
-          <fa-icon [icon]="faTrash"></fa-icon>
-        </button>
-      </td>
-      <td class="produit-cell">
-        <img [src]="produit.image" class="produit-img" />
-        <span class="produit-nom">{{ produit.nom }}</span>
-      </td>
-      <td>{{ produit.prix }} DH</td>
-      <td>
-        <div class="prix-controls">
-          <button (click)="decrementQuantite(produit)">-</button>
-          <span>{{ produit.quantite }}</span>
-          <button (click)="incrementQuantite(produit)">+</button>
-        </div>
-      </td>
-      <td><strong>{{ produit.prix * produit.quantite }} DH</strong></td>
-    </tr>
+   <tr *ngFor="let produit of panierService.getProduits()">
+  <td data-label="Supprimer">
+    <button class="delete-btn" (click)="supprimerProduit(produit)">
+      <fa-icon [icon]="faTrash"></fa-icon>
+    </button>
+  </td>
+
+  <td data-label="Produit" class="produit-cell">
+    <div class="produit-info">
+      <img [src]="produit.image" class="produit-img" />
+      <span class="produit-nom">{{ produit.nom }}</span>
+    </div>
+  </td>
+
+  <td data-label="Prix">{{ produit.prix }} DH</td>
+
+  <td data-label="Quantité">
+    <div class="prix-controls">
+      <button (click)="decrementQuantite(produit)">-</button>
+      <span>{{ produit.quantite }}</span>
+      <button (click)="incrementQuantite(produit)">+</button>
+    </div>
+  </td>
+
+  <td data-label="Sous-total">
+    <strong>{{ produit.prix * produit.quantite }} DH</strong>
+  </td>
+</tr>
+
   </tbody>
 </table>
 

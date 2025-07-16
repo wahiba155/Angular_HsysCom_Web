@@ -51,6 +51,7 @@ categoriesDisponibles = [
    
     produits = [
         {
+          id:1,
       categorie: 'Matériel Informatique',
       nom: 'Ordinateur Portable HP',
       description: 'Intel i5, 16GB RAM, SSD 512GB',
@@ -61,18 +62,37 @@ categoriesDisponibles = [
     { color: '#C21F1F', image: 'assets/images/pc_rouge.jpg' },
     { color: '#4D6A8D', image: 'assets/images/pc_bleu.png' }
   ],
+   enStock: true, // ✅ Ajouté
+  note: 4, // ✅ Ajouté
+  nombreAvis: 12, // ✅ Ajouté
+  garantie: "2 ans", // ✅ Ajouté
+  livraison: "Livraison gratuite en 48h", // ✅ Ajouté
+  descriptionComplete: "Ordinateur performant pour les tâches bureautiques et le multimédia.",
+  caracteristiques: [ // ✅ Ajouté
+    { nom: "Processeur", valeur: "Intel Core i5" },
+    { nom: "RAM", valeur: "16GB" },
+    { nom: "Stockage", valeur: "SSD 512GB" }
+  ],
       },
 
     {
+      id:2,
       categorie: 'Matériel Informatique',
       nom: 'Imprimante Oet d\'encre',
       description: 'Canon PIXMA G3430 Imprimante multifonction',
       prix: 1650,
       image: 'assets/images/imprémente.png',
-   
+       enStock: true, // ✅ Ajouté
+  note: 3, // ✅ Ajouté
+  nombreAvis: 12, // ✅ Ajouté
+  livraison: "Livraison gratuite en 48h", // ✅ Ajouté
+  descriptionComplete: "Ordinateur performant pour les tâches bureautiques et le multimédia.",
+
+  
       },
 
     {
+      id:3,
       categorie: 'Matériel Informatique',
       nom: 'Carte mémoire',
       description: 'Carte Mémoire MicroSD 256GB - DHI-TF-C100/256GB',
@@ -81,6 +101,7 @@ categoriesDisponibles = [
    
       },
        {
+      id:4,
       categorie: 'Matériel Informatique',
       nom: 'Tablette Graphiquee',
       description: 'Tablette Graphique One by Wacom Moyenne ',
@@ -89,6 +110,7 @@ categoriesDisponibles = [
    
       },
         {
+      id:5,
       categorie: 'Matériel Informatique',
       nom: 'SSD',
       description: 'Disque SSD Portable 500GB - Dahua',
@@ -98,6 +120,7 @@ categoriesDisponibles = [
       },
    
     {
+     id:6,
       categorie: 'Sécurité',
       nom: 'Caméra IP Hikvision',
       description: 'Surveillance HD nuit & jour',
@@ -105,6 +128,7 @@ categoriesDisponibles = [
       image: 'assets/images/caméra.jpg'
     },
     {
+          id:7,
       categorie: 'Multimédia',
       nom: 'Casque Bluetooth JBL',
       description: 'Son clair et basse puissante',
@@ -118,6 +142,7 @@ categoriesDisponibles = [
   ],
     },
     {
+          id:8,
       categorie: 'Espace Gaming',
       nom: 'Écran Gaming 27"',
       description: '144Hz, 1ms, Full HD',
@@ -125,12 +150,14 @@ categoriesDisponibles = [
       image: 'assets/images/moniteur.png'
     },
     {
+                id:9,
       categorie: 'Équipement Réseaux ',
       nom: 'Switch TP-Link 8 ports',
       description: 'Gestion intelligente, 1Gbps',
       prix: 329,
       image: 'assets/images/switch.png'
     },{
+                id:10,
       categorie: 'Matériel Informatique',
       nom: 'Ordinateur Portable HP',
       description: 'Intel i5, 16GB RAM, SSD 512GB',
@@ -144,6 +171,7 @@ categoriesDisponibles = [
       },
 
     {
+                id:11,
       categorie: 'Matériel Informatique',
       nom: 'Imprimante Oet d\'encre',
       description: 'Canon PIXMA G3430 Imprimante multifonction',
@@ -153,6 +181,7 @@ categoriesDisponibles = [
       },
 
     {
+       id:12,
       categorie: 'Matériel Informatique',
       nom: 'Carte mémoire',
       description: 'Carte Mémoire MicroSD 256GB - DHI-TF-C100/256GB',
@@ -161,6 +190,7 @@ categoriesDisponibles = [
    
       },
        {
+       id:13,
       categorie: 'Matériel Informatique',
       nom: 'Tablette Graphiquee',
       description: 'Tablette Graphique One by Wacom Moyenne ',
@@ -169,6 +199,7 @@ categoriesDisponibles = [
    
       },
         {
+                id:14,
       categorie: 'Matériel Informatique',
       nom: 'SSD',
       description: 'Disque SSD Portable 500GB - Dahua',
@@ -178,6 +209,8 @@ categoriesDisponibles = [
       },
    
     {
+                id:15,
+
       categorie: 'Sécurité',
       nom: 'Caméra IP Hikvision',
       description: 'Surveillance HD nuit & jour',
@@ -185,6 +218,8 @@ categoriesDisponibles = [
       image: 'assets/images/caméra.jpg'
     },
     {
+                id:16,
+
       categorie: 'Multimédia',
       nom: 'Casque Bluetooth JBL',
       description: 'Son clair et basse puissante',
@@ -198,6 +233,7 @@ categoriesDisponibles = [
   ],
     },
     {
+                id:17,
       categorie: 'Espace Gaming',
       nom: 'Écran Gaming 27"',
       description: '144Hz, 1ms, Full HD',
@@ -205,6 +241,7 @@ categoriesDisponibles = [
       image: 'assets/images/moniteur.png'
     },
     {
+                id:18,
       categorie: 'Équipement Réseaux ',
       nom: 'Switch TP-Link 8 ports',
       description: 'Gestion intelligente, 1Gbps',
@@ -212,6 +249,7 @@ categoriesDisponibles = [
       image: 'assets/images/switch.png'
     },
     {
+                id:19,
       categorie: 'Matériel Informatique',
       nom: 'Ordinateur Portable HP',
       description: 'Intel i5, 16GB RAM, SSD 512GB',
@@ -225,6 +263,7 @@ categoriesDisponibles = [
       },
 
     {
+                id:20,
       categorie: 'Matériel Informatique',
       nom: 'Imprimante Oet d\'encre',
       description: 'Canon PIXMA G3430 Imprimante multifonction',
@@ -234,6 +273,7 @@ categoriesDisponibles = [
       },
 
     {
+                id:21,
       categorie: 'Matériel Informatique',
       nom: 'Carte mémoire',
       description: 'Carte Mémoire MicroSD 256GB - DHI-TF-C100/256GB',
@@ -242,6 +282,7 @@ categoriesDisponibles = [
    
       },
        {
+                  id:22,
       categorie: 'Matériel Informatique',
       nom: 'Tablette Graphiquee',
       description: 'Tablette Graphique One by Wacom Moyenne ',
@@ -250,6 +291,7 @@ categoriesDisponibles = [
    
       },
         {
+        id:23,
       categorie: 'Matériel Informatique',
       nom: 'SSD',
       description: 'Disque SSD Portable 500GB - Dahua',
@@ -259,6 +301,7 @@ categoriesDisponibles = [
       },
    
     {
+            id:24,
       categorie: 'Sécurité',
       nom: 'Caméra IP Hikvision',
       description: 'Surveillance HD nuit & jour',
@@ -266,6 +309,7 @@ categoriesDisponibles = [
       image: 'assets/images/caméra.jpg'
     },
     {
+                id:25,
       categorie: 'Multimédia',
       nom: 'Casque Bluetooth JBL',
       description: 'Son clair et basse puissante',
@@ -279,6 +323,7 @@ categoriesDisponibles = [
   ],
     },
     {
+                id:26,
       categorie: 'Espace Gaming',
       nom: 'Écran Gaming 27"',
       description: '144Hz, 1ms, Full HD',
@@ -286,6 +331,7 @@ categoriesDisponibles = [
       image: 'assets/images/moniteur.png'
     },
     {
+                id:27,
       categorie: 'Équipement Réseaux ',
       nom: 'Switch TP-Link 8 ports',
       description: 'Gestion intelligente, 1Gbps',
@@ -295,16 +341,19 @@ categoriesDisponibles = [
   ];
   nombreArticles: number = 0;
 nombreFavoris: number = 0;
+quantites: { [produitId: number]: number } = {};
 
-   incrementQuantite(produit: any) {
-  produit.quantite = (produit.quantite || 1) + 1;
+
+incrementQuantite(id: number) {
+  this.quantites[id]++;
 }
 
-decrementQuantite(produit: any) {
-  if ((produit.quantite || 1) > 1) {
-    produit.quantite -= 1;
+decrementQuantite(id: number) {
+  if (this.quantites[id] > 1) {
+    this.quantites[id]--;
   }
 }
+
 selectedImage: string | undefined;
 
 selectColorImage(produit: any, image: string, color: string): void {
@@ -344,18 +393,13 @@ toggleFavoris(produit: any): void {
 }
 
 // Modifier ajouterAuPanier pour recalculer le nombre d'articles
-ajouterAuPanier(produit: any): void {
-  if (!produit.quantite || produit.quantite < 1) {
-    produit.quantite = 1;
-  }
+ajouterAuPanier(produit: any) {
+  produit.quantite = this.quantites[produit.id] || 1;
   this.panierService.ajouterProduit(produit);
-  this.calculerNombreArticles(); // mise à jour du compteur panier
-  alert(`${produit.nom} ajouté au panier !`);
 }
 
 
 
- 
   produitsFiltres: any[] = [];
 
   filtrerProduits(categorie: string) {
@@ -367,6 +411,9 @@ ajouterAuPanier(produit: any): void {
     this.initializeAnimations();
      this.calculerNombreArticles();
   this.initializeAnimations();
+   this.produits.forEach(p => {
+    this.quantites[p.id] = 1; // quantité par défaut 1
+  });
   }
 
   private initializeAnimations(): void {
@@ -420,4 +467,13 @@ ajouterAuPanier(produit: any): void {
       img.alt = 'Image par défaut';
     }
   }
+  Details(produit: any): void {
+  console.log('Voir détails du produit:', produit);
+  this.router.navigate(['/produit', produit.id]);
+}
+
+onProductCardClick(produit: any): void {
+  this.Details(produit);
+}
+
 }
