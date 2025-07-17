@@ -1,3 +1,4 @@
+
 .top-bar {
   display: flex;
   align-items: center;
@@ -5,10 +6,17 @@
   background: #ffffff;
   padding: 14px 50px; 
   border-bottom: 1px solid #ddd;
-  position: sticky;
   top: 0;
   z-index: 999;
+  
+  position: fixed;
+  top: 45px; /* Hauteur de top-strip */
+  z-index: 999;
+  width: 100%;
+  background: white;
+
 }
+
 
 .left-section {
   display: flex;
@@ -142,6 +150,10 @@
   padding: 4px 30px; 
   background: #ffffff;
   border-bottom: 1px solid #eee;
+  position: fixed;
+  top: 120px;
+  z-index: 998;
+  width: 100%;
 }
 
 .nav-bar a {
@@ -180,6 +192,12 @@
   padding: 12px 20px;
   font-size: 16px;
   font-weight: 400;
+    position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: linear-gradient(to right, #2e5c84, #1E3953);
+
 }
 
 .strip-center {
@@ -239,7 +257,7 @@
   padding: 0;
   transition: right 0.3s ease;
   overflow-y: auto;
-  z-index: 999;
+  z-index: 1100;
   border-left: 2px solid #1E3953;
 }
 
@@ -559,6 +577,27 @@
   min-width: 18px;
   text-align: center;
   z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .top-strip {
+    height: auto;
+    padding: 8px 15px;
+    font-size: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .top-bar {
+    top: 60px; /* Hauteur estimée .top-strip mobile */
+  }
+
+  .nav-bar {
+    top: 123px; 
+  }
+
+  
 }
 
 

@@ -1,86 +1,83 @@
-
-<!-- Section image produit -->
-<div class="image-section">
-  <div class="main-image">
-    <img [src]="selectedImage || produit.image" [alt]="produit.nom" />
-    <button class="favorite-btn" [class.active]="produit.favoris" (click)="toggleFavoris()">
-      <fa-icon [icon]="faHeart"></fa-icon>
-    </button>
-  </div>
-
-  <!-- Palette de couleurs -->
-  <div class="color-selection" *ngIf="produit.couleurImages?.length">
-    <h4>Couleurs disponibles</h4>
-    <div class="color-palette">
-      <div
-        class="color-dot"
-        *ngFor="let item of produit.couleurImages"
-        [style.backgroundColor]="item.color"
-        [class.selected]="selectedColor === item.color"
-        (click)="selectColorImage(item.image, item.color)"
-      ></div>
-    </div>
-  </div>
-</div>
-
-<!-- Section infos produit -->
-<div class="info-section">
-
-  <!-- Titre -->
-  <div class="product-header">
-    <h1>{{ produit.nom }}</h1>
-  </div>
-
-  <!-- Prix et Stock -->
-  <div class="price-section">
-    <div class="price">{{ produit.prix }} MAD</div>
-    <div class="stock-info" [class.in-stock]="produit.enStock">
-      <span *ngIf="produit.enStock">✓ En stock</span>
-      <span *ngIf="!produit.enStock">✗ Rupture de stock</span>
-    </div>
-  </div>
-
-  <!-- Description -->
-  <div class="description" *ngIf="produit.description">
-    <h3>Description</h3>
-    <p>{{ produit.description }}</p>
-  </div>
-
-  <!-- Caractéristiques -->
-  <div class="specifications" *ngIf="produit.caracteristiques?.length">
-    <h3>Caractéristiques</h3>
-    <div class="spec-grid">
-      <div class="spec-item" *ngFor="let spec of produit.caracteristiques">
-        <span class="spec-label">{{ spec.nom }}:</span>
-        <span class="spec-value">{{ spec.valeur }}</span>
+<div class="product-detail-container">
+  <div class="product-content">
+    
+    <!-- IMAGE À GAUCHE -->
+    <div class="image-section">
+      <div class="main-image">
+        <img [src]="selectedImage || produit.image" [alt]="produit.nom" />
+        <button class="favorite-btn" [class.active]="produit.favoris" (click)="toggleFavoris()">
+          <fa-icon [icon]="faHeart"></fa-icon>
+        </button>
       </div>
-    </div>
-  </div>
 
-  <!-- Garantie -->
-  <div class="delivery-info" *ngIf="produit.garantie">
-    <div class="info-item">
-      <strong>Garantie:</strong> {{ produit.garantie }}
-    </div>
-  </div>
-
-  <!-- Achat -->
-  <div class="purchase-section">
-    <div class="quantity-selector">
-      <label>Quantité:</label>
-      <div class="qty-controls">
-        <button (click)="decrementQuantite(produit.id)" class="qty-btn" >−</button>
-        <span class="qty-value">{{ quantites[produit.id] }}</span>
-        <button (click)="incrementQuantite(produit.id)" class="qty-btn">+</button>
+      <!-- Palette de couleurs -->
+      <div class="color-selection" *ngIf="produit.couleurImages?.length">
+        <h4>Couleurs disponibles</h4>
+        <div class="color-palette">
+          <div
+            class="color-dot"
+            *ngFor="let item of produit.couleurImages"
+            [style.backgroundColor]="item.color"
+            [class.selected]="selectedColor === item.color"
+            (click)="selectColorImage(item.image, item.color)"
+          ></div>
+        </div>
       </div>
     </div>
 
-    <div class="action-buttons">
-      <button class="add-to-cart-btn" (click)="ajouterAuPanier(produit)" [disabled]="!produit.enStock">
-        <fa-icon [icon]="faCartShopping" ></fa-icon>
-        <span>Ajouter au panier</span>
-      </button>
-    </div>
-  </div>
+    <!-- INFOS À DROITE -->
+    <div class="info-section">
+      <div class="product-header">
+        <h1>{{ produit.nom }}</h1>
+      </div>
 
+      <div class="price-section">
+        <div class="price">{{ produit.prix }} MAD</div>
+        <div class="stock-info" [class.in-stock]="produit.enStock">
+          <span *ngIf="produit.enStock">✓ En stock</span>
+          <span *ngIf="!produit.enStock">✗ Rupture de stock</span>
+        </div>
+      </div>
+
+      <div class="description" *ngIf="produit.description">
+        <h3>Description</h3>
+        <p>{{ produit.description }}</p>
+      </div>
+
+      <div class="specifications" *ngIf="produit.caracteristiques?.length">
+        <h3>Caractéristiques</h3>
+        <div class="spec-grid">
+          <div class="spec-item" *ngFor="let spec of produit.caracteristiques">
+            <span class="spec-label">{{ spec.nom }}:</span>
+            <span class="spec-value">{{ spec.valeur }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="delivery-info" *ngIf="produit.garantie">
+        <div class="info-item">
+          <strong>Garantie:</strong> {{ produit.garantie }}
+        </div>
+      </div>
+
+      <div class="purchase-section">
+        <div class="quantity-selector">
+          <label>Quantité:</label>
+          <div class="qty-controls">
+            <button (click)="decrementQuantite(produit.id)" class="qty-btn">−</button>
+            <span class="qty-value">{{ quantites[produit.id] }}</span>
+            <button (click)="incrementQuantite(produit.id)" class="qty-btn">+</button>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="add-to-cart-btn" (click)="ajouterAuPanier(produit)" [disabled]="!produit.enStock">
+            <fa-icon [icon]="faCartShopping"></fa-icon>
+            <span>Ajouter au panier</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

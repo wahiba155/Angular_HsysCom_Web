@@ -1,12 +1,12 @@
 <div class="page-container">
-
   <app-header></app-header>
+
+  <app-category-bar></app-category-bar>
 
   <main class="main content">
     <div class="content-inner">
-      <!-- Contenu fixe à gauche / droite -->
+      <!-- Optionnel : éléments de layout -->
       <div class="content">
-        <!-- Suppression de la partie left-side -->
         <div class="divider" role="separator" aria-label="Divider"></div>
         <div class="right-side">
           <div class="social-links">
@@ -17,11 +17,10 @@
         </div>
       </div>
 
-      <!-- La partie dynamique selon la route -->
+      <!-- 👉 Toutes les pages Angular ici -->
       <router-outlet></router-outlet>
     </div>
   </main>
 
   <app-footer></app-footer>
-
 </div>

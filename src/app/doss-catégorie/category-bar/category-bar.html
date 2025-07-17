@@ -1,0 +1,12 @@
+<div class="category-strip" *ngIf="afficherBarre">
+  <div
+    class="category-card"
+    *ngFor="let cat of categoriesDisponibles"
+    (mouseenter)="hoveredCategorie = cat.nom"
+    (mouseleave)="hoveredCategorie = null"
+    (click)="filtrerProduits(cat.nom)"
+  >
+    <img [src]="cat.image" [alt]="cat.nom" style="background: white;" />
+    <span>{{ cat.nom }}</span>
+  </div>
+</div>

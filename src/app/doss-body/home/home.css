@@ -1,6 +1,5 @@
 
 
-
 .product-list {
   display: flex;
   flex-wrap: wrap;
@@ -8,7 +7,7 @@
   padding: 30px;
   background: #fff;
   justify-content: flex-start;
-    padding-bottom: 100px;
+     padding-top: 300px; 
 
 }
 
@@ -199,11 +198,15 @@
   overflow-x: auto;
   white-space: nowrap;
   gap: 24px;
-  padding: 0 2px 2px; 
-  border-bottom: 1px solid #e5e5e5;
-  scrollbar-width: none; 
-  scroll-behavior: smooth
-   
+  border-bottom: 1px solid #f7eded;
+   position: fixed;
+  top: 100px; 
+  z-index: 997;
+  width: 100%;
+  background: white;
+  padding-top: 60px;
+  overflow-x: auto;
+
 }
 
 .category-strip::-webkit-scrollbar {
@@ -288,7 +291,7 @@
     margin-top: 5px;
   }
    .product-card {
-    width: calc(50% - 15px); /* 2 cartes par ligne avec un peu de gap */
+    width: calc(50% - 15px); 
   }
 
   .product-list {
@@ -297,7 +300,6 @@
   }
  
 }
-/* Ajoutez ces styles à votre fichier CSS existant */
 
 .product-card {
   width: 230px;
@@ -385,5 +387,25 @@
     transform: translateY(0);
   }
 }
+@media (max-width: 768px) {
+ 
+
+  .category-strip {
+    top: 160px; /* Ajuste selon hauteur exacte des barres */
+    padding-top: 3px;
+    gap: 16px;
+  }
+
+  .product-list {
+    padding-top: 270px; /* espace total visible pour les barres fixes */
+  }
+
+  /* Optionnel : réduire padding horizontal */
+  .product-list {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
 
 

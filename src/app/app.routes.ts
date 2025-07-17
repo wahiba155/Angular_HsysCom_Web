@@ -6,7 +6,8 @@ import { PanierPage } from './doss-body/PanierPage/PanierPage';
 import { ProductDetailComponent } from './doss-body/DetailProduit/product-detail';
 
 export const routes: Routes = [
-  { path: '', component: Home },
+{ path: 'home', component: Home },
+{ path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'about', component: About },
   { path: 'contact', component: Contact },
   { path: 'panierpage', component: PanierPage },

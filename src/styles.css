@@ -47,4 +47,33 @@ body > * {
       /* pour que le main prenne tout l'espace restant */
     }
 
+    .global-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: white;
+}
+
+.top-strip {
+  position: relative; /* ou rien */
+  z-index: 1;
+}
+
+.top-bar {
+  position: relative;
+  z-index: 2;
+}
+
+app-category-bar {
+  position: relative;
+  z-index: 3;
+}
+
+/* Espace en dessous pour éviter que le contenu soit masqué par le header */
+.main-content {
+  margin-top: 220px; /* ⚠️ ajuste cette valeur selon la hauteur cumulée */
+}
+
 

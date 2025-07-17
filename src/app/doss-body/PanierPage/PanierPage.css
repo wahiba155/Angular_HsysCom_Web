@@ -21,9 +21,13 @@ body {
   background: white;
   margin-left: 0;
   margin-right: 0;
-  padding: 0%;
-  
-  
+  margin-top:14% ;
+}
+@media (max-width: 768px) {
+  .panier-table {
+
+  margin-top:28% ;
+}
 }
 
 .panier-table thead {

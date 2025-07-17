@@ -62,13 +62,13 @@ categoriesDisponibles = [
     { color: '#C21F1F', image: 'assets/images/pc_rouge.jpg' },
     { color: '#4D6A8D', image: 'assets/images/pc_bleu.png' }
   ],
-   enStock: true, // ✅ Ajouté
-  note: 4, // ✅ Ajouté
-  nombreAvis: 12, // ✅ Ajouté
-  garantie: "2 ans", // ✅ Ajouté
-  livraison: "Livraison gratuite en 48h", // ✅ Ajouté
+  enStock: true,
+  note: 4,
+  nombreAvis: 12,
+  garantie: "2 ans",
+  livraison: "Livraison gratuite en 48h",
   descriptionComplete: "Ordinateur performant pour les tâches bureautiques et le multimédia.",
-  caracteristiques: [ // ✅ Ajouté
+  caracteristiques: [ 
     { nom: "Processeur", valeur: "Intel Core i5" },
     { nom: "RAM", valeur: "16GB" },
     { nom: "Stockage", valeur: "SSD 512GB" }
@@ -82,11 +82,11 @@ categoriesDisponibles = [
       description: 'Canon PIXMA G3430 Imprimante multifonction',
       prix: 1650,
       image: 'assets/images/imprémente.png',
-       enStock: true, // ✅ Ajouté
-  note: 3, // ✅ Ajouté
-  nombreAvis: 12, // ✅ Ajouté
-  livraison: "Livraison gratuite en 48h", // ✅ Ajouté
-  descriptionComplete: "Ordinateur performant pour les tâches bureautiques et le multimédia.",
+      enStock: true, 
+      note: 3,
+      nombreAvis: 12,
+      livraison: "Livraison gratuite en 48h",
+      descriptionComplete: "Ordinateur performant pour les tâches bureautiques et le multimédia.",
 
   
       },
@@ -412,7 +412,7 @@ ajouterAuPanier(produit: any) {
      this.calculerNombreArticles();
   this.initializeAnimations();
    this.produits.forEach(p => {
-    this.quantites[p.id] = 1; // quantité par défaut 1
+    this.quantites[p.id] = 1; 
   });
   }
 

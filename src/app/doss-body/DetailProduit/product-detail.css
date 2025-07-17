@@ -1,9 +1,12 @@
 .product-detail-container {
+  margin-top:-50px;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   background: #fff;
   min-height: 100vh;
+       padding-top: 300px; 
+
 }
 
 
@@ -22,7 +25,7 @@
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,8,6,0.1);
 }
 
 .main-image img {
@@ -386,4 +389,17 @@
   .price {
     font-size: 24px;
   }
+}
+
+@media (max-width: 768px) {
+.product-detail-container {
+  margin-top:-50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  min-height: 100vh;
+       padding-top: 280px; 
+
+}
 }
