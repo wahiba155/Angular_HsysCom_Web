@@ -28,7 +28,7 @@
       <a class="login-link" routerLink="/login">Se connecter</a>
     </div>
 
-    <div class="icon-panier-wrapper" >
+    <div class="icon-panier-wrapper"  (click)="toggleFavorisSidebar()">
       <fa-icon [icon]="faHeart" class="icon">
 
       </fa-icon><span class="badge">{{nombreFavoris}}</span>
@@ -89,3 +89,36 @@
     <button (click)="panierService.viderPanier()">Vider le panier</button>
   </div>
 </div>
+<div class="favoris-sidebar" [class.open]="favorisOuvert" >
+  <div class="sidebar-header">
+    <h3>Favoris</h3>
+    <button (click)="toggleFavorisSidebar()">×</button>
+  </div>
+
+  <div class="favoris-list" *ngIf="favoris.length > 0; else vide">
+    <div class="favoris-item" *ngFor="let produit of favoris">
+  <img [src]="produit.image" [alt]="produit.nom" />
+  <div class="info">
+    <div>{{ produit.nom }}</div>
+    <div>{{ produit.prix }} MAD</div>
+  </div>
+
+  <div class="favoris-actions">
+    <button (click)="ajouterAuPanier(produit); $event.stopPropagation()" title="Ajouter au panier">+</button>
+    <button (click)="supprimerFavori(produit.id)" title="Supprimer des favoris">
+      -
+    </button>
+  </div>
+</div>
+<div class="favoris-actions-bottom">
+<a href="/favoris" class="btn-liste">Voir la liste</a>
+            <button class="btn-liste" (click)="favorisService.viderFavoris()" >Vider la liste</button>
+        </div>
+
+  </div>
+
+  <ng-template #vide>
+    <p style="text-align: center; margin-top: 20px;">Aucun produit dans les favoris.</p>
+  </ng-template>
+</div>
+

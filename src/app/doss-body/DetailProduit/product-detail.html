@@ -1,12 +1,15 @@
 <div class="product-detail-container">
   <div class="product-content">
-    
-    <!-- IMAGE À GAUCHE -->
+
+    <!-- COLONNE GAUCHE -->
     <div class="image-section">
       <div class="main-image">
         <img [src]="selectedImage || produit.image" [alt]="produit.nom" />
-        <button class="favorite-btn" [class.active]="produit.favoris" (click)="toggleFavoris()">
-          <fa-icon [icon]="faHeart"></fa-icon>
+        <button 
+          class="favorite-btn" 
+          [class.active]="estFavori(produit)" 
+          (click)="toggleFavori(produit)">
+          <fa-icon [icon]="faHeart" [ngClass]="{ 'favori-plein': estFavori(produit) }"></fa-icon>
         </button>
       </div>
 
@@ -23,9 +26,20 @@
           ></div>
         </div>
       </div>
+
+      <!-- ✅ Caractéristiques (à gauche) -->
+      <div class="specifications" *ngIf="produit.caracteristiques?.length">
+        <h3>Caractéristiques</h3>
+        <div class="spec-grid">
+          <div class="spec-item" *ngFor="let spec of produit.caracteristiques">
+            <span class="spec-label">{{ spec.nom }}:</span>
+            <span class="spec-value">{{ spec.valeur }}</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- INFOS À DROITE -->
+    <!-- COLONNE DROITE -->
     <div class="info-section">
       <div class="product-header">
         <h1>{{ produit.nom }}</h1>
@@ -39,19 +53,10 @@
         </div>
       </div>
 
+      <!-- ✅ Description (à droite) -->
       <div class="description" *ngIf="produit.description">
         <h3>Description</h3>
         <p>{{ produit.description }}</p>
-      </div>
-
-      <div class="specifications" *ngIf="produit.caracteristiques?.length">
-        <h3>Caractéristiques</h3>
-        <div class="spec-grid">
-          <div class="spec-item" *ngFor="let spec of produit.caracteristiques">
-            <span class="spec-label">{{ spec.nom }}:</span>
-            <span class="spec-value">{{ spec.valeur }}</span>
-          </div>
-        </div>
       </div>
 
       <div class="delivery-info" *ngIf="produit.garantie">
@@ -71,7 +76,10 @@
         </div>
 
         <div class="action-buttons">
-          <button class="add-to-cart-btn" (click)="ajouterAuPanier(produit)" [disabled]="!produit.enStock">
+          <button 
+            class="add-to-cart-btn" 
+            (click)="ajouterAuPanier(produit)" 
+            [disabled]="!produit.enStock">
             <fa-icon [icon]="faCartShopping"></fa-icon>
             <span>Ajouter au panier</span>
           </button>

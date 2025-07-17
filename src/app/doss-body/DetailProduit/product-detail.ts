@@ -7,6 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PanierService } from '../../services/panier.service';
+import { FavorisService } from '../../services/favoris.service';
 
 library.add(faCartShopping,faHeart,faSearch,faShare,faArrowLeft,faStar);
 
@@ -29,13 +30,15 @@ faArrowLeft = faArrowLeft;
 faCartShopping = faCartShopping;
 faStar=faStar;
 
-  constructor(private route: ActivatedRoute,public panierService: PanierService
-  ) {}
+  constructor(private route: ActivatedRoute
+    ,public panierService: PanierService,
+        public favorisService: FavorisService) 
+        {}
  
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    const home = new Home(null as any, null as any, null as any); // ⚠️ temporaire. Idéalement à remplacer par un service
+    const home = new Home(null as any, null as any, null as any,null as any); 
     this.produit = home.produits.find(p => p.id === id);
     this.selectedImage = this.produit?.image;
 this.quantites[this.produit.id] = 1;
@@ -64,6 +67,24 @@ calculerNombreArticles(): void {
   this.nombreArticles = produits.reduce((total, produit) => {
     return total + (produit.quantite || 1);
   }, 0);
+}
+
+
+favorisOuvert: boolean = false;
+
+
+toggleFavori(produit: any): void {
+  const estFavori = this.favorisService.estDansFavoris(produit.id);
+  if (estFavori) {
+    this.favorisService.retirerFavori(produit.id);
+  } else {
+    this.favorisService.ajouterFavori(produit); // ✅ Manquait cette ligne !
+  }
+}
+
+
+estFavori(produit: any): boolean {
+  return this.favorisService.estDansFavoris(produit.id);
 }
 
 

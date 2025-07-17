@@ -5,7 +5,7 @@
   padding: 20px;
   background: #fff;
   min-height: 100vh;
-       padding-top: 300px; 
+   padding-top: 20%; 
 
 }
 
@@ -402,4 +402,13 @@
        padding-top: 280px; 
 
 }
+}
+
+.favorite-btn fa-icon {
+  transition: color 0.3s ease;
+}
+
+.specifications {
+  margin-top: 30px;
+  margin-bottom: 30px;
 }

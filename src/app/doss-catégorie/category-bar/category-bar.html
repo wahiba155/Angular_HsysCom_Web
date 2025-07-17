@@ -1,4 +1,4 @@
-<div class="category-strip" *ngIf="afficherBarre">
+<div class="category-strip" *ngIf="afficherBarre" >
   <div
     class="category-card"
     *ngFor="let cat of categoriesDisponibles"
@@ -10,3 +10,59 @@
     <span>{{ cat.nom }}</span>
   </div>
 </div>
+
+<div class="product-list" *ngIf="produitsFiltres.length > 0">
+  <ng-container *ngFor="let produit of produitsFiltres">
+    <div class="product-card informatique"  (click)="Details(produit)"  
+      style="cursor: pointer;"             >
+
+       <fa-icon
+  [icon]="estFavori(produit) ? faHeart : faHeartEmpty"
+  (click)="toggleFavori(produit);$event.stopPropagation()"
+  class="heart-icon" [ngClass]="{ 'favori': estFavori(produit) }"
+></fa-icon>
+
+
+
+<img [src]="produit.selectedImage || produit.image" [alt]="produit.nom" class="product-img" />
+
+      <div class="product-info">
+        <h3>{{ produit.nom }}</h3>
+        <p>{{ produit.description }}</p>
+      </div>
+
+      <div class="palette-price-row">
+        <div class="color-palette" *ngIf="produit.couleurImages?.length; else emptyColorPalette">
+          <div
+  class="color-dot"
+  *ngFor="let item of produit.couleurImages"
+  [ngStyle]="{ 'background-color': item.color }"
+  [class.selected]="produit.selectedColor === item.color"
+  (click)="selectColorImage(produit, item.image, item.color)"
+></div>
+
+        </div>
+
+        <div class="price">{{ produit.prix }} MAD</div>
+      </div>
+
+      <ng-template #emptyColorPalette>
+        <div class="color-palette placeholder"></div>
+      </ng-template>
+
+      <div class="product-actions">
+        <div class="right-icon">
+          <fa-icon [icon]="faCartShopping" class="icon-action" (click)="ajouterAuPanier(produit);$event.stopPropagation()"></fa-icon>
+        </div>
+
+        <div class="quantity-selector">
+          <button (click)="decrementQuantite(produit.id);$event.stopPropagation()" class="qty-btn">−</button>
+          <span class="qty-value">{{ quantites[produit.id] }}</span>
+          <button (click)="incrementQuantite(produit.id);$event.stopPropagation()" class="qty-btn">+</button>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+</div>
+

@@ -3,6 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PanierService } from '../../services/panier.service';
+import { FavorisService } from '../../services/favoris.service';
 import { Subscription } from 'rxjs';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { NavigationEnd } from '@angular/router';
@@ -20,12 +21,10 @@ library.add(faSearch, faHeart, faCartShopping, faUser, faTimes,faTrash);
 })
 
 export class Header implements OnInit, OnDestroy {
-  // Initialisation des badges à 0
   nombreFavoris: number = 0;
   nombreArticles: number = 0;
   totalMontant: number = 0;
 
-  // Icônes FontAwesome
   faSearch = faSearch;
   faHeart = faHeart;
   faCartShopping = faCartShopping;
@@ -33,47 +32,64 @@ export class Header implements OnInit, OnDestroy {
   faTimes = faTimes;
   faTrash = faTrash;
   
-  // État de la sidebar et navigation
   sidebarVisible = false;
+  favorisOuvert: boolean = false;
   navOpen = false;
   isMenuOpen = false;
   
-  // Subscription pour le panier
   private panierSub!: Subscription;
+  private favorisSub!: Subscription; 
 
   constructor(
     private elementRef: ElementRef, 
     public panierService: PanierService,
-    private router: Router
+    private router: Router,
+    public favorisService: FavorisService
   ) {}
 
   ngOnInit(): void {
     this.initializeAnimations();
     
-     this.nombreArticles = 0;
+    this.favorisSub = this.favorisService.favoris$.subscribe(favoris => {
+      this.nombreFavoris = favoris.length;
+      console.log('🤍 Favoris mis à jour :', this.nombreFavoris);
+    });
 
-this.panierSub = this.panierService.panier$.subscribe(panier => {
-  this.nombreArticles = panier.reduce((total, produit) => total + (produit.quantite ?? 1), 0);
-    console.log('🧾 Articles dans le panier :', this.nombreArticles);
+    this.panierSub = this.panierService.panier$.subscribe(panier => {
+      this.nombreArticles = panier.reduce((total, produit) => total + (produit.quantite ?? 1), 0);
+      console.log('🧾 Articles dans le panier :', this.nombreArticles);
+    });
 
-});
-
-
-  // Fermer la sidebar si on navigue vers /panierpage
-  this.router.events.subscribe(event => {
-    if (event instanceof NavigationEnd && event.urlAfterRedirects === '/panierpage') {
-      this.closeSidebar();
-    }
-  });
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd && event.urlAfterRedirects === '/panierpage') {
+        this.closeSidebar();
+      }
+    });
   }
 
   ngOnDestroy(): void {
     if (this.panierSub) {
       this.panierSub.unsubscribe();
     }
+    if (this.favorisSub) {
+      this.favorisSub.unsubscribe();
+    }
   }
 
-  // Gestion de la sidebar panier
+  toggleFavorisSidebar() {
+    this.favorisOuvert = !this.favorisOuvert;
+    console.log('favorisOuvert:', this.favorisOuvert);
+  }
+
+  get favoris() {
+    return this.favorisService.getFavoris();
+  }
+
+ 
+  ajouterAuPanier(produit: any) {
+    this.panierService.ajouterProduit(produit);
+  }
+
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible;
   }
@@ -82,12 +98,10 @@ this.panierSub = this.panierService.panier$.subscribe(panier => {
     this.sidebarVisible = false;
   }
 
-  // Gestion de la navigation mobile
   toggleNav() {
     this.navOpen = !this.navOpen;
   }
 
-  // Animations pour la barre de recherche
   private initializeAnimations(): void {
     const searchInput = this.elementRef.nativeElement.querySelector('.search-container input');
     const searchContainer = this.elementRef.nativeElement.querySelector('.search-container');
@@ -103,7 +117,6 @@ this.panierSub = this.panierService.panier$.subscribe(panier => {
     }
   }
 
-  // Gestion des quantités dans le panier
   incrementQuantite(produit: any) {
     produit.quantite++;
   }
@@ -114,27 +127,22 @@ this.panierSub = this.panierService.panier$.subscribe(panier => {
     }
   }
 
-  // Navigation vers la page panier
   voirPanier() {
     this.closeSidebar();
-this.router.navigate(['/panierpage']);
+    this.router.navigate(['/panierpage']);
   }
 
-  // Gestionnaires d'événements
   onSearch(event: Event): void {
     const input = event.target as HTMLInputElement;
     const searchTerm = input.value.trim();
     
     if (searchTerm) {
       console.log('Recherche pour:', searchTerm);
-      // Ajoutez ici votre logique de recherche
     }
   }
 
   onHeartClick(): void {
     console.log('Favoris cliqués - Nombre actuel:', this.nombreFavoris);
-    // Ajoutez ici votre logique pour gérer les favoris
-    // Exemple: this.nombreFavoris++;
   }
 
   onCartClick(): void {
@@ -147,7 +155,6 @@ this.router.navigate(['/panierpage']);
     this.router.navigate(['/login']);
   }
 
-  // Méthodes pour incrémenter les badges (à utiliser plus tard)
   incrementFavoris(): void {
     this.nombreFavoris++;
   }
@@ -158,14 +165,20 @@ this.router.navigate(['/panierpage']);
     }
   }
 
-  // Méthode pour réinitialiser les badges
   resetBadges(): void {
     this.nombreFavoris = 0;
     this.nombreArticles = 0;
   }
 
-   supprimerProduit(produit: any): void {
+  supprimerProduit(produit: any): void {
     this.panierService.supprimerProduit(produit);
   }
 
+  supprimerFavori(id: number): void {
+    this.favorisService.retirerFavori(id);
+  }
+
+  viderFavoris(): void {
+    this.favorisService.viderFavoris();
+  }
 }

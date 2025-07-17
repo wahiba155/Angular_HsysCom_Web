@@ -590,7 +590,7 @@
   }
 
   .top-bar {
-    top: 60px; /* Hauteur estimée .top-strip mobile */
+    top: 60px; 
   }
 
   .nav-bar {
@@ -600,6 +600,258 @@
   
 }
 
+/* sidebar favoris */
+ .favoris-sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100%;
+            background: #ffffff;
+            box-shadow: -3px 0 15px rgba(30, 57, 83, 0.1);
+            padding: 0;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            z-index: 1100;
+            border-left: 2px solid #1E3953;
+        }
 
+        .favoris-sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #2e5c84, #1E3953);
+            color: white;
+        }
+
+        .sidebar-header h3 {
+            color: white;
+            margin: 0;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .sidebar-header button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.3s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header button:hover {
+            transform: scale(1.2);
+            color: #202559;
+        }
+
+        .favoris-list {
+            padding: 0;
+        }
+
+        .favoris-item {
+            display: flex;
+            gap: 12px;
+            margin: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            align-items: center;
+        }
+
+        .favoris-item:hover {
+            background: #e8f4f8;
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0, 94, 166, 0.1);
+        }
+
+        .favoris-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .favoris-item .info {
+            flex-grow: 1;
+        }
+
+        .favoris-item .info div:first-child {
+            font-weight: 500;
+            color: #2e5c84;
+            margin-bottom: 5px;
+        }
+
+        .favoris-item .info div:last-child {
+            color: #1E3953;
+            font-weight: 600;
+        }
+
+        .favoris-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .favoris-actions button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .favoris-actions button:first-child {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .favoris-actions button:first-child:hover {
+            background: linear-gradient(135deg, #1e7e34, #17a2b8);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .favoris-actions button:last-child {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        .favoris-actions button:last-child:hover {
+            background: linear-gradient(135deg, #bd2130, #a71e2a);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        .favoris-actions-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 15px;
+            padding-bottom: 20px;
+        }
+
+        .favoris-actions-bottom button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-liste{
+            display: block;
+  text-align: center;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #005ea6, #2e5c84);
+  color: white;
+}
+
+    
+
+        .btn-liste:hover {
+            background: #1E3953;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 57, 83, 0.2);
+        }
+
+        .favoris-empty {
+            text-align: center;
+            margin: 40px 20px;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        /* Animation pour les éléments */
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .favoris-sidebar.open .favoris-item {
+            animation: slideInFromRight 0.3s ease forwards;
+        }
+
+        /* Scrollbar personnalisée */
+        .favoris-sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .favoris-sidebar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .favoris-sidebar::-webkit-scrollbar-thumb {
+            background: #005ea6;
+            border-radius: 3px;
+        }
+
+        .favoris-sidebar::-webkit-scrollbar-thumb:hover {
+            background: #1E3953;
+        }
+
+        /* Badge pour le nombre de favoris */
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #1E3953;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .favoris-sidebar {
+                width: 280px;
+            }
+            
+            .favoris-item {
+                margin: 10px;
+                padding: 12px;
+            }
+            
+            .favoris-item img {
+                width: 50px;
+                height: 50px;
+            }
+        }
 
 
