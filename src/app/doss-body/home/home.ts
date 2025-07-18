@@ -2,41 +2,61 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCartShopping, faHeart as faHeartSolid, faStar, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
+import { faCartShopping,faHeart,faStar,faSearch } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
 import { PanierService } from '../../services/panier.service';
 import { FavorisService } from '../../services/favoris.service';
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
+import { ActivatedRoute } from '@angular/router';
 
-library.add(faCartShopping); // Optionnel, selon usage
+library.add(faCartShopping);
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule],
+  imports: [FontAwesomeModule,CommonModule ],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class Home {
-  @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>; // Utilisé ?
 
+export class Home implements OnInit {
+  @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
   faCartShopping = faCartShopping;
   faStar = faStar;
   faSearch = faSearch;
-  faHeartSolid = faHeartSolid;
-  faHeartRegular = faHeartRegular;
-
+  faHeart = faHeartSolid;
+  faHeartEmpty = faHeartRegular;
   isImageLoaded: boolean = false;
   hoveredCategorie: string | null = null;
 
-  constructor(
+   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private elementRef: ElementRef,
     public panierService: PanierService,
-    public favorisService: FavorisService
+    public favorisService: FavorisService  // <-- ici
+
   ) {}
+categoriesDisponibles = [
+  { nom: 'Matériel Informatique', image: 'assets/images/pc.jpg' },
+  { nom: 'Sécurité', image: 'assets/images/cable.png' },
+  { nom: 'Multimédia', image: 'assets/images/milti.png' },
+  { nom: 'Espace Gaming', image: 'assets/images/moniteur.png' },
+  { nom: 'Équipement Réseaux', image: 'assets/images/réseau.png' },
+  { nom: 'Bébé et enfant', image: 'assets/images/baby.png' },
+  { nom: 'Tables et chaises', image: 'assets/images/tables_chairs.png' },
+  { nom: 'Tapis et paillasson', image: 'assets/images/Tapis_paillasson.png' },
+  { nom: 'Maison connectée', image: 'assets/images/smart_home.png' },
+  { nom: 'Linge de maison et textile', image: 'assets/images/textiles.png' },
+  { nom: 'Salle de bain', image: 'assets/images/bathroom.png' },
+  { nom: 'Décoration', image: 'assets/images/decoration.png' },
+  { nom: 'Animalerie', image: 'assets/images/animalerie.png' },
+  { nom: 'Bricolage et entretien', image: 'assets/images/bricolage.jpg' }
+];
 
-
+   
     produits = [
         {
           id:1,
@@ -326,5 +346,185 @@ export class Home {
       prix: 329,
       image: 'assets/images/switch.png'
     }
-  ];  }
+  ];
+  nombreArticles: number = 0;
+nombreFavoris: number = 0;
+quantites: { [produitId: number]: number } = {};
 
+
+incrementQuantite(id: number) {
+  this.quantites[id]++;
+}
+
+decrementQuantite(id: number) {
+  if (this.quantites[id] > 1) {
+    this.quantites[id]--;
+  }
+}
+produitsFiltres: any[] = [];
+
+  filtrerProduits(categorie: string) {
+    this.produitsFiltres = this.produits.filter(p => p.categorie === categorie);
+  }
+
+
+selectedImage: string | undefined;
+
+selectColorImage(produit: any, image: string, color: string): void {
+  produit.selectedImage = image;
+  produit.selectedColor = color;
+}
+
+getProduitsParCategorie(categorie: string) {
+  return this.produits.filter(p => p.categorie === categorie);
+}
+
+
+selectedColor: string = '';
+
+
+voirDetails(produit: any): void {
+  console.log('Voir détails du produit:', produit);
+
+}
+calculerNombreArticles(): void {
+  const produits = this.panierService.getProduits();
+  this.nombreArticles = produits.reduce((total, produit) => {
+    return total + (produit.quantite || 1);
+  }, 0);
+}
+
+
+
+toggleFavoris(): void {
+  const favoris = this.panierService.getProduits();
+  this.nombreFavoris = favoris.reduce((total, produit) => {
+    return total + (produit.quantite || 1);
+  }, 0);
+
+}
+updateNombreFavoris(): void {
+  this.nombreFavoris = this.favorisService.getFavoris().length;
+}
+
+
+
+
+ajouterAuPanier(produit: any) {
+  produit.quantite = this.quantites[produit.id] || 1;
+  this.panierService.ajouterProduit(produit);
+}
+
+
+
+
+
+
+  ngOnInit(): void {
+    this.initializeAnimations();
+     this.calculerNombreArticles();
+    this.updateNombreFavoris();
+
+   this.produits.forEach(p => {
+    this.quantites[p.id] = 1; 
+  });
+   this.route.queryParams.subscribe(params => {
+    const categorieParam = params['categorie'];
+    if (categorieParam) {
+      this.filtrerProduits(categorieParam);
+    } else {
+      this.produitsFiltres = []; // ou tous les produits si tu veux
+    }
+  });
+ 
+  }
+
+  private initializeAnimations(): void {
+    const textBlock = this.elementRef.nativeElement.querySelector('.text-block');
+    if (textBlock) {
+      textBlock.classList.add('slide-in-left');
+    }
+
+    setTimeout(() => {
+      const imageBlock = this.elementRef.nativeElement.querySelector('.image-block');
+      if (imageBlock) {
+        imageBlock.classList.add('slide-in-right');
+      }
+    }, 300);
+
+    this.initializeParallax();
+  }
+
+  private initializeParallax(): void {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-up');
+        }
+      });
+    });
+
+    const homeContainer = this.elementRef.nativeElement.querySelector('.home-container');
+    if (homeContainer) {
+      observer.observe(homeContainer);
+    }
+  }
+
+  onVoirPlusClick(): void {
+    console.log('Voir plus cliqué');
+    this.router.navigate(['/categorie']);
+  }
+
+  onImageLoad(): void {
+    this.isImageLoaded = true;
+    const img = this.elementRef.nativeElement.querySelector('.image-block img');
+    if (img) {
+      img.classList.add('loaded');
+    }
+  }
+
+  onImageError(): void {
+    const img = this.elementRef.nativeElement.querySelector('.image-block img') as HTMLImageElement;
+    if (img) {
+      img.src = 'assets/images/default-product.jpg';
+      img.alt = 'Image par défaut';
+    }
+  }
+Details(produit: any): void {
+  console.log('Voir détails du produit:', produit);
+  this.router.navigate(['/produit', produit.id]);
+}
+
+onProductCardClick(produit: any): void {
+  this.Details(produit);
+}
+
+
+
+favorisOuvert: boolean = false;
+
+
+toggleFavori(produit: any): void {
+  const estFavori = this.favorisService.estDansFavoris(produit.id);
+  if (estFavori) {
+    this.favorisService.retirerFavori(produit.id);
+  } else {
+    this.favorisService.ajouterFavori(produit); // ✅ Manquait cette ligne !
+  }
+}
+
+
+estFavori(produit: any): boolean {
+  return this.favorisService.estDansFavoris(produit.id);
+}
+
+
+toggleFavorisSidebar() {
+  this.favorisOuvert = !this.favorisOuvert;
+}
+
+ajouterAuFavoris(produit: any): void {
+  this.favorisService.ajouterFavori(produit);
+  this.updateNombreFavoris();
+}
+}

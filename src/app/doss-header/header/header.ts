@@ -52,19 +52,28 @@ export class Header implements OnInit, OnDestroy {
     
     this.favorisSub = this.favorisService.favoris$.subscribe(favoris => {
       this.nombreFavoris = favoris.length;
-      console.log('🤍 Favoris mis à jour :', this.nombreFavoris);
+      console.log(' Favoris mis à jour :', this.nombreFavoris);
     });
 
     this.panierSub = this.panierService.panier$.subscribe(panier => {
       this.nombreArticles = panier.reduce((total, produit) => total + (produit.quantite ?? 1), 0);
-      console.log('🧾 Articles dans le panier :', this.nombreArticles);
+      console.log(' Articles dans le panier :', this.nombreArticles);
     });
 
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd && event.urlAfterRedirects === '/panierpage') {
-        this.closeSidebar();
-      }
-    });
+   this.router.events.subscribe(event => {
+  if (event instanceof NavigationEnd) {
+    const url = event.urlAfterRedirects;
+
+    if (url === '/panierpage') {
+      this.closeSidebar();
+    }
+
+    if (url === '/favorisliste') {
+      this.favorisOuvert = false;
+    }
+  }
+});
+
   }
 
   ngOnDestroy(): void {

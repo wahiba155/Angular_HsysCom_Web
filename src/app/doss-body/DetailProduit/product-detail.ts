@@ -38,7 +38,7 @@ faStar=faStar;
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    const home = new Home(null as any, null as any, null as any,null as any); 
+    const home = new Home(null as any, null as any, null as any,null as any,null as any); 
     this.produit = home.produits.find(p => p.id === id);
     this.selectedImage = this.produit?.image;
 this.quantites[this.produit.id] = 1;
