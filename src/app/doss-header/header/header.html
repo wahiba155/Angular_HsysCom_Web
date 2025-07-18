@@ -49,7 +49,7 @@
   <a routerLink="/about" routerLinkActive="active">Service</a>
 </nav>
 </div>
-<div class="sidebar-panier" [class.visible]="sidebarVisible">
+<div class="sidebar-panier" [class.visible]="sidebarVisible" (click)="$event.stopPropagation()">
   <div class="sidebar-panier-header">
     <h3>Votre panier</h3>
     <button class="close-btn" (click)="closeSidebar()">
@@ -68,17 +68,28 @@
     
     <div class="infos">
       <p><strong>{{ produit.nom }}</strong></p>
-      <p>{{ produit.prix }} MAD</p>
+      <!-- Affichage du prix avec gestion de la promotion -->
+      <div class="prix-container">
+        <span *ngIf="produit.prixPromotion && produit.prixPromotion > 0; else prixNormal" class="prix-promo">
+          {{ produit.prixPromotion }} MAD
+        </span>
+        <ng-template #prixNormal>
+          <span class="prix-normal">{{ produit.prix }} MAD</span>
+        </ng-template>
+      </div>
 
-      <div class="prix-controls">
+      
+      <!-- Calcul du total avec le prix approprié -->
+      <p>Total: {{ getPrixAffiche(produit) * (produit.quantite || 1) }} MAD</p>
+    </div>
+    <div class="prix-controls">
         <button (click)="decrementQuantite(produit)">-</button>
         <span>{{ produit.quantite || 1 }}</span>
         <button  (click)="incrementQuantite(produit)">+</button>
       </div>
 
-      <p>Total: {{ produit.prix * produit.quantite }} MAD</p>
-    </div>
   </div>
+  
 
   <div class="total-panier">
     <p><strong>Total général:</strong> {{ panierService.getTotal() }} MAD</p>
@@ -89,7 +100,7 @@
     <button (click)="panierService.viderPanier()">Vider le panier</button>
   </div>
 </div>
-<div class="favoris-sidebar" [class.open]="favorisOuvert" >
+<div class="favoris-sidebar" [class.open]="favorisOuvert" (click)="$event.stopPropagation()" >
   <div class="sidebar-header">
     <h3>Favoris</h3>
     <button (click)="toggleFavorisSidebar()">×</button>
@@ -100,16 +111,30 @@
   <img [src]="produit.image" [alt]="produit.nom" />
   <div class="info">
     <div>{{ produit.nom }}</div>
-    <div>{{ produit.prix }} MAD</div>
+    <!-- Affichage du prix avec gestion de la promotion dans les favoris -->
+    <div class="prix-container">
+      <span *ngIf="produit.prixPromotion && produit.prixPromotion > 0; else prixNormal" class="prix-promo">
+        {{ produit.prixPromotion }} MAD
+      </span>
+      <ng-template #prixNormal>
+        <span class="prix-normal">{{ produit.prix }} MAD</span>
+      </ng-template>
+    </div>
+
+    <!-- Quantité placée sous le prix -->
+    <div class="prix-controls">
+      <button (click)="decrementFavorisQuantite(produit)">-</button>
+      <span>{{ produit.quantite ?? 0 }}</span>
+      <button (click)="incrementFavorisQuantite(produit)">+</button>
+    </div>
   </div>
 
   <div class="favoris-actions">
     <button (click)="ajouterAuPanier(produit); $event.stopPropagation()" title="Ajouter au panier">+</button>
-    <button (click)="supprimerFavori(produit.id)" title="Supprimer des favoris">
-      -
-    </button>
+    <button (click)="supprimerFavori(produit.id)" title="Supprimer des favoris">-</button>
   </div>
 </div>
+
 <div class="favoris-actions-bottom">
 <a routerLink="/favorisliste" class="btn-liste">Voir la liste</a>
             <button class="btn-liste" (click)="favorisService.viderFavoris()" >Vider la liste</button>
@@ -121,4 +146,3 @@
     <p style="text-align: center; margin-top: 20px;">Aucun produit dans les favoris.</p>
   </ng-template>
 </div>
-

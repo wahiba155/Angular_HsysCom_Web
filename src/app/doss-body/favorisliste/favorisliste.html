@@ -1,56 +1,56 @@
-<div class="product-list" *ngIf="favoris.length > 0; else vide">
-  <ng-container *ngFor="let produit of favoris">
-    <div class="product-card informatique" (click)="Details(produit)" style="cursor: pointer;">
-      
-      <fa-icon
-        [icon]="estFavori(produit) ? faHeart : faHeart"
-        (click)="toggleFavori(produit); $event.stopPropagation()"
-        class="heart-icon"
-        [ngClass]="{ 'favori': estFavori(produit) }"
-      ></fa-icon>
+<table class="favoris-table" *ngIf="favoris.length > 0; else vide">
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Nom</th>
+      <th>Prix</th>
+      <th>Quantité</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let produit of favoris">
+      <td data-label="Image" (click)="Details(produit)" style="cursor:pointer;">
+        <img [src]="produit.selectedImage || produit.image" [alt]="produit.nom" class="table-product-img" />
+      </td>
+      <td data-label="Nom" (click)="Details(produit)" style="cursor:pointer;">
+        {{ produit.nom }}
+      </td>
+      <td data-label="Prix">
+        {{ produit.prixPromotion > 0 ? produit.prixPromotion : produit.prix }} MAD
+      </td>
+      <td data-label="Quantité">
+        <button (click)="decrementQuantite(produit.id)" class="qty-btn">−</button>
+        <span class="qty-value">{{ quantites[produit.id] }}</span>
+        <button (click)="incrementQuantite(produit.id)" class="qty-btn">+</button>
+      </td>
+      <td data-label="Actions">
+        <fa-icon
+  [icon]="faCartShopping"
+  class="icon-action"
+  (click)="ajouterAuPanier(produit)"
+  title="Ajouter au panier"
+  [class.disabled]="!produit.enStock"
+  [style.pointer-events]="!produit.enStock ? 'none' : 'auto'"
+  [style.opacity]="!produit.enStock ? '0.4' : '1'"
+></fa-icon>
 
-      <img [src]="produit.selectedImage || produit.image" [alt]="produit.nom" class="product-img" />
+<fa-icon
+  [icon]="faHeart"
+  class="icon-action favori"
+  (click)="toggleFavori(produit)"
+  title="Retirer des favoris"
+  [style.pointer-events]="!produit.enStock ? 'none' : 'auto'"
+  [style.opacity]="!produit.enStock ? '0.4' : '1'"
+></fa-icon>
 
-      <div class="product-info">
-        <h3>{{ produit.nom }}</h3>
-        <p>{{ produit.description }}</p>
-      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-      <div class="palette-price-row">
-        <div class="color-palette" *ngIf="produit.couleurImages?.length; else emptyColorPalette">
-          <div
-            class="color-dot"
-            *ngFor="let item of produit.couleurImages"
-            [ngStyle]="{ 'background-color': item.color }"
-            [class.selected]="produit.selectedColor === item.color"
-            (click)="selectColorImage(produit, item.image, item.color); $event.stopPropagation()"
-          ></div>
-        </div>
-
-        <div class="price">{{ produit.prix }} MAD</div>
-      </div>
-
-      <ng-template #emptyColorPalette>
-        <div class="color-palette placeholder"></div>
-      </ng-template>
-
-      <div class="product-actions">
-        <div class="right-icon">
-          <fa-icon
-            [icon]="faCartShopping"
-            class="icon-action"
-            (click)="ajouterAuPanier(produit); $event.stopPropagation()"
-          ></fa-icon>
-        </div>
-
-        <div class="quantity-selector">
-          <button (click)="decrementQuantite(produit.id); $event.stopPropagation()" class="qty-btn">−</button>
-          <span class="qty-value">{{ quantites[produit.id] }}</span>
-          <button (click)="incrementQuantite(produit.id); $event.stopPropagation()" class="qty-btn">+</button>
-        </div>
-      </div>
-    </div>
-  </ng-container>
+<div class="btn-container" *ngIf="favoris.length > 0">
+  <button class="btn-clear" (click)="viderFavoris()">Vider la liste</button>
 </div>
 
 <ng-template #vide>

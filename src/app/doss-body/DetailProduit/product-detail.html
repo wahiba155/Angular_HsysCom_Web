@@ -1,16 +1,23 @@
 <div class="product-detail-container">
   <div class="product-content">
 
-    <!-- COLONNE GAUCHE -->
     <div class="image-section">
       <div class="main-image">
         <img [src]="selectedImage || produit.image" [alt]="produit.nom" />
-        <button 
-          class="favorite-btn" 
-          [class.active]="estFavori(produit)" 
-          (click)="toggleFavori(produit)">
-          <fa-icon [icon]="faHeart" [ngClass]="{ 'favori-plein': estFavori(produit) }"></fa-icon>
-        </button>
+       <button 
+  class="favorite-btn" 
+  [class.active]="estFavori(produit)" 
+  (click)="produit.enStock ? toggleFavori(produit) : null"
+  [style.pointer-events]="!produit.enStock ? 'none' : 'auto'"
+  [style.opacity]="!produit.enStock ? '0.4' : '1'"
+  title="{{ produit.enStock ? 'Ajouter aux favoris' : 'Indisponible' }}"
+>
+  <fa-icon 
+    [icon]="faHeart" 
+    [ngClass]="{ 'favori-plein': estFavori(produit) }">
+  </fa-icon>
+</button>
+
       </div>
 
       <!-- Palette de couleurs -->
@@ -46,12 +53,32 @@
       </div>
 
       <div class="price-section">
-        <div class="price">{{ produit.prix }} MAD</div>
-        <div class="stock-info" [class.in-stock]="produit.enStock">
-          <span *ngIf="produit.enStock">✓ En stock</span>
-          <span *ngIf="!produit.enStock">✗ Rupture de stock</span>
-        </div>
-      </div>
+  <div *ngIf="produit.prixPromotion > 0; else prixNormal">
+    <div class="text-2xl font-bold text-green-600">
+      {{ produit.prixPromotion }} MAD
+    </div>
+    <div class="text-red-500 line-through text-sm">
+      {{ produit.prix }} MAD
+    </div>
+  </div>
+
+  <ng-template #prixNormal>
+    <div class="text-2xl font-bold text-black">
+      {{ produit.prix }} MAD
+    </div>
+  </ng-template>
+
+  <div *ngIf="produit.prixPromotion > 0"
+       class="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
+    Promo
+  </div>
+
+  <div class="stock-info" [class.in-stock]="produit.enStock">
+    <span *ngIf="produit.enStock">✓ En stock</span>
+    <span *ngIf="!produit.enStock">✗ Rupture de stock</span>
+  </div>
+</div>
+
 
       <!-- ✅ Description (à droite) -->
       <div class="description" *ngIf="produit.description">

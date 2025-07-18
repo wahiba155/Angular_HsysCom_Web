@@ -9,6 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { NavigationEnd } from '@angular/router';
 
 import { faSearch, faHeart, faCartShopping, faUser, faTimes,faTrash} from '@fortawesome/free-solid-svg-icons';
+import { HostListener } from '@angular/core'; // tout en haut
 
 library.add(faSearch, faHeart, faCartShopping, faUser, faTimes,faTrash);
 
@@ -94,10 +95,19 @@ export class Header implements OnInit, OnDestroy {
     return this.favorisService.getFavoris();
   }
 
- 
-  ajouterAuPanier(produit: any) {
-    this.panierService.ajouterProduit(produit);
-  }
+  // Méthode modifiée pour gérer le prix promotionnel
+ajouterAuPanier(produit: any) {
+  const quantite = produit.quantite ?? 1;
+
+  const produitAvecQuantiteEtPrix = {
+    ...produit,
+    quantite,
+    prix: produit.prixPromotion && produit.prixPromotion > 0 ? produit.prixPromotion : produit.prix
+  };
+  
+  this.panierService.ajouterProduit(produitAvecQuantiteEtPrix);
+}
+
 
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible;
@@ -190,4 +200,45 @@ export class Header implements OnInit, OnDestroy {
   viderFavoris(): void {
     this.favorisService.viderFavoris();
   }
+
+  // Méthode pour obtenir le prix à afficher (avec ou sans promo)
+  getPrixAffiche(produit: any): number {
+    return produit.prixPromotion && produit.prixPromotion > 0 ? produit.prixPromotion : produit.prix;
+  }
+
+  incrementFavorisQuantite(produit: any): void {
+  if (!produit.quantite) {
+    produit.quantite = 1;
+  } else {
+    produit.quantite++;
+  }
+}
+
+decrementFavorisQuantite(produit: any): void {
+  if (produit.quantite && produit.quantite > 0) {
+    produit.quantite--;
+  }
+}
+
+@HostListener('document:click', ['$event'])
+onDocumentClick(event: MouseEvent): void {
+  const targetElement = event.target as HTMLElement;
+
+  const clickedInsidePanier = this.elementRef.nativeElement.querySelector('.sidebar-panier')?.contains(targetElement);
+  const clickedPanierIcon = this.elementRef.nativeElement.querySelector('.icon-panier-wrapper:nth-child(3)')?.contains(targetElement);
+
+  const clickedInsideFavoris = this.elementRef.nativeElement.querySelector('.favoris-sidebar')?.contains(targetElement);
+  const clickedFavorisIcon = this.elementRef.nativeElement.querySelector('.icon-panier-wrapper:nth-child(2)')?.contains(targetElement);
+
+  // Fermer le panier si on clique en dehors
+  if (!clickedInsidePanier && !clickedPanierIcon) {
+    this.sidebarVisible = false;
+  }
+
+  // Fermer les favoris si on clique en dehors
+  if (!clickedInsideFavoris && !clickedFavorisIcon) {
+    this.favorisOuvert = false;
+  }
+}
+
 }

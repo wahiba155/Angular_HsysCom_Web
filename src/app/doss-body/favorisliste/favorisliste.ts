@@ -18,7 +18,6 @@ export class Favorisliste implements OnInit {
   favoris: any[] = [];
   faHeart = faHeart;
   faCartShopping = faCartShopping;
-  quantites: { [key: number]: number } = {};
 
   constructor(
     private favorisService: FavorisService,
@@ -27,9 +26,12 @@ export class Favorisliste implements OnInit {
 
   ) {}
 
+  quantites: { [id: number]: number } = {};
+
+
   ngOnInit(): void {
-    this.favoris = this.favorisService.getFavoris();
-    this.favoris.forEach(p => this.quantites[p.id] = 1);
+  this.favoris = this.favorisService.getFavoris();
+  this.favoris.forEach(p => this.quantites[p.id] = p.quantite || 0);
   }
 
   toggleFavori(produit: any) {
@@ -46,15 +48,15 @@ export class Favorisliste implements OnInit {
     this.panierService.ajouterProduit(produitAvecQuantite);
   }
 
-  incrementQuantite(id: number) {
-    this.quantites[id]++;
-  }
+ incrementQuantite(id: number): void {
+  this.quantites[id]++;
+}
 
-  decrementQuantite(id: number) {
-    if (this.quantites[id] > 1) {
-      this.quantites[id]--;
-    }
+decrementQuantite(id: number): void {
+  if (this.quantites[id] > 0) {
+    this.quantites[id]--;
   }
+}
 
   selectColorImage(produit: any, image: string, color: string) {
     produit.selectedImage = image;
@@ -64,6 +66,16 @@ export class Favorisliste implements OnInit {
   console.log('Voir détails du produit:', produit);
   this.router.navigate(['/produit', produit.id]);
 }
+
+  getPrix(produit: any): number {
+  return produit.prixPromotion ? produit.prixPromotion : produit.prix;
+}
+viderFavoris() {
+  this.favorisService.viderFavoris();
+  this.favoris = [];
+  this.quantites = {};
+}
+
 
 
 }

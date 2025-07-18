@@ -23,7 +23,12 @@
     </div>
   </td>
 
-  <td data-label="Prix">{{ produit.prix }} DH</td>
+<td data-label="Prix">
+   {{
+      (produit.prixPromotion > 0 ? produit.prixPromotion : produit.prix)
+    }} DH
+</td>
+
 
   <td data-label="Quantité">
     <div class="prix-controls">
@@ -33,9 +38,15 @@
     </div>
   </td>
 
-  <td data-label="Sous-total">
-    <strong>{{ produit.prix * produit.quantite }} DH</strong>
-  </td>
+ <td data-label="Sous-total">
+  <strong>
+    {{
+      (produit.prixPromotion > 0 ? produit.prixPromotion : produit.prix)
+      * produit.quantite
+    }} DH
+  </strong>
+</td>
+
 </tr>
 
   </tbody>

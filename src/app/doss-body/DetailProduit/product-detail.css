@@ -412,3 +412,146 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+.price-section {
+  position: relative;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 80px;
+}
+
+
+.price-section .prix-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-section .text-green-600 {
+  color: #1E3953;;
+  font-size: 1.75rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.price-section .text-red-500.line-through {
+  color: #dc2626;
+  text-decoration: line-through;
+  font-size: 0.95rem;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+.price-section .text-black {
+  color: #1E3953;;
+  font-size: 1.75rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+
+.price-section .bg-red-500 {
+  background-color: #dc2626;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+  position: absolute;
+  top: -8px;
+  left: 16px;
+  z-index: 1;
+}
+
+
+.stock-info {
+  background-color: #f0f9ff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid #e0f2fe;
+}
+
+.stock-info.in-stock {
+  color: #16a34a;
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.stock-info:not(.in-stock) {
+  color: #dc2626;
+  background-color: #fef2f2;
+  border-color: #fecaca;
+}
+
+.stock-info span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+
+@media (max-width: 768px) {
+  .product-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .info-section {
+    padding-left: 10px;
+  }
+
+  .price-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px 16px;
+  }
+
+  .price-section .text-green-600,
+  .price-section .text-black {
+    font-size: 1.5rem;
+  }
+
+  .price-section .text-red-500.line-through {
+    font-size: 0.875rem;
+  }
+
+  .price-section .bg-red-500 {
+    top: -6px;
+    left: 12px;
+  }
+
+  .stock-info {
+    align-self: stretch;
+    text-align: center;
+  }
+
+  .quantity-selector {
+    flex-direction: row; /* ✅ Ne pas empiler les boutons quantité */
+    align-items: center;
+    gap: 10px;
+  }
+
+  .main-image img {
+    height: 300px;
+  }
+
+  .product-header h1 {
+    font-size: 24px;
+  }
+
+  .purchase-section {
+    padding: 20px;
+  }
+}

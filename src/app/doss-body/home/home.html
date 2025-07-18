@@ -1,4 +1,5 @@
-<div class="category-strip"  >
+<!-- Template Angular mis à jour -->
+<div class="category-strip">
   <div
     class="category-card"
     *ngFor="let cat of categoriesDisponibles"
@@ -13,46 +14,81 @@
 
 <div class="product-list" *ngIf="produitsFiltres.length > 0">
   <ng-container *ngFor="let produit of produitsFiltres">
-    <div class="product-card informatique"  (click)="Details(produit)"  
-      style="cursor: pointer;"             >
+    <div class="product-card informatique" (click)="Details(produit)" style="cursor: pointer;">
+      
+      <!-- Badge promo -->
+      <div *ngIf="produit.prixPromotion > 0" class="promo-badge">
+        Promo
+      </div>
 
-       <fa-icon
-  [icon]="estFavori(produit) ? faHeart : faHeartEmpty"
-  (click)="toggleFavori(produit);$event.stopPropagation()"
-  class="heart-icon" [ngClass]="{ 'favori': estFavori(produit) }"
-></fa-icon>
+      <!-- Icône coeur -->
+      <fa-icon
+        [icon]="estFavori(produit) ? faHeart : faHeartEmpty"
+        class="top-right-icon"
+        (click)="toggleFavori(produit);$event.stopPropagation()"
+        [style.pointer-events]="!produit.enStock ? 'none' : 'auto'"
+        [style.opacity]="!produit.enStock ? '0.4' : '1'"
+        title="Ajouter aux favoris"
+      ></fa-icon>
 
+      <!-- Image produit -->
+      <img [src]="produit.selectedImage || produit.image" [alt]="produit.nom" class="product-img" />
 
-
-<img [src]="produit.selectedImage || produit.image" [alt]="produit.nom" class="product-img" />
-
+      <!-- Informations produit -->
       <div class="product-info">
         <h3>{{ produit.nom }}</h3>
         <p>{{ produit.description }}</p>
       </div>
 
-      <div class="palette-price-row">
-        <div class="color-palette" *ngIf="produit.couleurImages?.length; else emptyColorPalette">
-          <div
-  class="color-dot"
-  *ngFor="let item of produit.couleurImages"
-  [ngStyle]="{ 'background-color': item.color }"
-  [class.selected]="produit.selectedColor === item.color"
-  (click)="selectColorImage(produit, item.image, item.color);$event.stopPropagation()"
-></div>
+  <!-- Prix avec indicateur stock (INVERSE) -->
+<div class="price-stock-row">
+  <!-- Indicateur de stock à gauche -->
+  <div class="stock-indicator" [class.in-stock]="produit.enStock">
+    <span class="stock-emoji" *ngIf="produit.enStock">😊</span>
+    <span class="stock-emoji" *ngIf="!produit.enStock">😢</span>
+    <span *ngIf="produit.enStock">En stock</span>
+    <span *ngIf="!produit.enStock">Rupture de stock</span>
+  </div>
 
-        </div>
+  <!-- Prix à droite -->
+  <div class="price-section">
+    <div *ngIf="produit.prixPromotion > 0; else prixNormal">
+      <div class="price-promo">{{ produit.prixPromotion }} MAD</div>
+      <div class="price-original">{{ produit.prix }} MAD</div>
+    </div>
+    <ng-template #prixNormal>
+      <div class="price">{{ produit.prix }} MAD</div>
+    </ng-template>
+  </div>
+</div>
 
-        <div class="price">{{ produit.prix }} MAD</div>
+
+      <!-- Palette couleurs repositionnée -->
+      <div class="color-palette" *ngIf="produit.couleurImages?.length; else emptyColorPalette">
+        <div
+          class="color-dot"
+          *ngFor="let item of produit.couleurImages"
+          [ngStyle]="{ 'background-color': item.color }"
+          [class.selected]="produit.selectedColor === item.color"
+          (click)="selectColorImage(produit, item.image, item.color);$event.stopPropagation()"
+        ></div>
       </div>
 
       <ng-template #emptyColorPalette>
         <div class="color-palette placeholder"></div>
       </ng-template>
 
+      <!-- Actions produit -->
       <div class="product-actions">
         <div class="right-icon">
-          <fa-icon [icon]="faCartShopping" class="icon-action" (click)="ajouterAuPanier(produit);$event.stopPropagation()"></fa-icon>
+          <fa-icon
+            [icon]="faCartShopping"
+            class="icon-action"
+            (click)="ajouterAuPanier(produit);$event.stopPropagation()"
+            [style.pointer-events]="!produit.enStock ? 'none' : 'auto'"
+            [style.opacity]="!produit.enStock ? '0.4' : '1'"
+            title="Ajouter au panier"
+          ></fa-icon>
         </div>
 
         <div class="quantity-selector">
@@ -65,4 +101,3 @@
     </div>
   </ng-container>
 </div>
-

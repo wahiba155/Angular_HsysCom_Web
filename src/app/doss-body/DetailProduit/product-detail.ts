@@ -97,9 +97,6 @@ ajouterAuPanier(produit: any) {
     this.produit.favoris = !this.produit.favoris;
   }
 
-  getStars(): number[] {
-    return Array(5).fill(0).map((_, i) => i < this.produit.note ? 1 : 0);
-  }
 
   retourner() {
     history.back();

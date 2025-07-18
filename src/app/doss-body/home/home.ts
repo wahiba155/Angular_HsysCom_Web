@@ -71,16 +71,13 @@ categoriesDisponibles = [
     { color: '#4D6A8D', image: 'assets/images/pc_bleu.png' }
   ],
   enStock: true,
-  note: 4,
-  nombreAvis: 12,
   garantie: "2 ans",
-  livraison: "Livraison gratuite en 48h",
-  descriptionComplete: "Ordinateur performant pour les tâches bureautiques et le multimédia.",
   caracteristiques: [ 
     { nom: "Processeur", valeur: "Intel Core i5" },
     { nom: "RAM", valeur: "16GB" },
     { nom: "Stockage", valeur: "SSD 512GB" }
   ],
+  prixPromotion: 6999,
       },
 
     {
@@ -91,10 +88,7 @@ categoriesDisponibles = [
       prix: 1650,
       image: 'assets/images/imprémente.png',
       enStock: true, 
-      note: 3,
-      nombreAvis: 12,
-      livraison: "Livraison gratuite en 48h",
-      descriptionComplete: "Ordinateur performant pour les tâches bureautiques et le multimédia.",
+      prixPromotion: 1499,
 
   
       },
@@ -106,7 +100,8 @@ categoriesDisponibles = [
       description: 'Carte Mémoire MicroSD 256GB - DHI-TF-C100/256GB',
       prix: 117,
       image: 'assets/images/carte.png',
-   
+       prixPromotion: 0,
+
       },
        {
       id:4,
@@ -115,7 +110,7 @@ categoriesDisponibles = [
       description: 'Tablette Graphique One by Wacom Moyenne ',
       prix: 469,
       image: 'assets/images/tablette.png',
-   
+      prixPromotion: 0,
       },
         {
       id:5,
@@ -409,12 +404,21 @@ updateNombreFavoris(): void {
 
 
 
-
 ajouterAuPanier(produit: any) {
-  produit.quantite = this.quantites[produit.id] || 1;
-  this.panierService.ajouterProduit(produit);
+  // Créer une copie du produit pour éviter de modifier l'original
+  const produitPanier = { ...produit };
+  
+  // Utiliser le prix promotionnel si disponible, sinon le prix normal
+  produitPanier.prixFinal = produit.prixPromotion > 0 ? produit.prixPromotion : produit.prix;
+  
+  // Ajouter la quantité sélectionnée
+  produitPanier.quantite = this.quantites[produit.id] || 1;
+  
+  this.panierService.ajouterProduit(produitPanier);
+  
+  // Optionnel : Afficher un message de confirmation
+  console.log(`Produit ajouté au panier avec le prix: ${produitPanier.prixFinal} MAD`);
 }
-
 
 
 
@@ -504,13 +508,25 @@ onProductCardClick(produit: any): void {
 favorisOuvert: boolean = false;
 
 
+
+// Méthode corrigée pour toggleFavori aussi
 toggleFavori(produit: any): void {
   const estFavori = this.favorisService.estDansFavoris(produit.id);
   if (estFavori) {
     this.favorisService.retirerFavori(produit.id);
   } else {
-    this.favorisService.ajouterFavori(produit); // ✅ Manquait cette ligne !
+    // Créer une copie du produit avec le bon prix
+    const produitFavoris = { ...produit };
+    produitFavoris.prixFinal = produit.prixPromotion > 0 ? produit.prixPromotion : produit.prix;
+    
+    this.favorisService.ajouterFavori(produitFavoris);
   }
+  this.updateNombreFavoris();
+}
+
+// Méthode utilitaire pour obtenir le prix final d'un produit
+getPrixFinal(produit: any): number {
+  return produit.prixPromotion > 0 ? produit.prixPromotion : produit.prix;
 }
 
 
@@ -523,8 +539,18 @@ toggleFavorisSidebar() {
   this.favorisOuvert = !this.favorisOuvert;
 }
 
+// Méthode corrigée pour ajouter aux favoris
 ajouterAuFavoris(produit: any): void {
-  this.favorisService.ajouterFavori(produit);
+  // Créer une copie du produit pour éviter de modifier l'original
+  const produitFavoris = { ...produit };
+  
+  // Utiliser le prix promotionnel si disponible, sinon le prix normal
+  produitFavoris.prixFinal = produit.prixPromotion > 0 ? produit.prixPromotion : produit.prix;
+  
+  this.favorisService.ajouterFavori(produitFavoris);
   this.updateNombreFavoris();
+  
+  // Optionnel : Afficher un message de confirmation
+  console.log(`Produit ajouté aux favoris avec le prix: ${produitFavoris.prixFinal} MAD`);
 }
 }

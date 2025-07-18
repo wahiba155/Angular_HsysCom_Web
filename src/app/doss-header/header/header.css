@@ -268,9 +268,8 @@
 .sidebar-panier h3 {
   color: white;
   margin: 0;
-  padding: 20px;
-  font-size: 1.2em;
-  font-weight: 600;
+  font-size: 1.0em;
+  font-weight: 400;
   text-align: center;
 }
 
@@ -632,8 +631,8 @@
         .sidebar-header h3 {
             color: white;
             margin: 0;
-            font-size: 1.2em;
-            font-weight: 600;
+            font-size: 1.0em;
+            font-weight: 400;
         }
 
         .sidebar-header button {
@@ -759,8 +758,8 @@
             letter-spacing: 0.5px;
         }
 
-        .btn-liste{
-            display: block;
+  .btn-liste{
+  display: block;
   text-align: center;
   padding: 12px 20px;
   border-radius: 6px;
@@ -790,7 +789,6 @@
             font-style: italic;
         }
 
-        /* Animation pour les éléments */
         @keyframes slideInFromRight {
             from {
                 opacity: 0;
@@ -806,7 +804,6 @@
             animation: slideInFromRight 0.3s ease forwards;
         }
 
-        /* Scrollbar personnalisée */
         .favoris-sidebar::-webkit-scrollbar {
             width: 6px;
         }
@@ -855,3 +852,21 @@
         }
 
 
+.prix-controls button {
+  padding: 2px 8px;
+  font-size: 14px;
+  background: #dce0e1;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.prix-controls button:hover {
+  background: #95c2ec;
+  transform: scale(1.1);
+  color: black;
+}
